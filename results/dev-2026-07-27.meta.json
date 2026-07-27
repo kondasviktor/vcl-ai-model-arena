@@ -1,0 +1,25 @@
+{
+  "vibebench_version": "1.0.0",
+  "promptfoo_version": "0.121.19",
+  "suite": "dev",
+  "date": "2026-07-27",
+  "label": "maintainer",
+  "runner": "local",
+  "git_sha": "aef91a8c8ca778b987b3430bb554ed66386ef034",
+  "registry_version": "1.0.0",
+  "registry_sha256": "cef90c16d1a1c787f902ee5f00650c1c9c2e13c1ceb06935440666935c112daa",
+  "models": [
+    "anthropic/claude-opus-4.8",
+    "anthropic/claude-fable-5",
+    "openai/gpt-5.6-sol",
+    "x-ai/grok-4.5",
+    "moonshotai/kimi-k3",
+    "google/gemini-3.6-flash"
+  ],
+  "created_at": "2026-07-27T12:20:53.579Z",
+  "notes": "OpenRouter 402 Payment Required for anthropic/claude-fable-5 and openai/gpt-5.6-sol on this run (insufficient credits / max_tokens affordability). Other four models completed. Many promptfoo 'errors' are those provider failures, not scored assert fails.",
+  "errors": [
+    "anthropic/claude-fable-5",
+    "openai/gpt-5.6-sol"
+  ]
+}

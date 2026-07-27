@@ -1,0 +1,38 @@
+# VCL VibeBench model registry — single source of truth for Tier 1 providers.
+# Comment out retired models; do not delete (keeps /results timeline readable).
+# Verify IDs at https://openrouter.ai/models before each run.
+version: "1.0.0"
+updated: "2026-07-27"
+defaults:
+  temperature: 0
+models:
+  - id: anthropic/claude-opus-4.8
+    provider: openrouter
+    label: Claude Opus 4.8
+    added: "2026-07-27"
+    status: active
+  - id: anthropic/claude-fable-5
+    provider: openrouter
+    label: Claude Fable 5
+    added: "2026-07-27"
+    status: active
+  - id: openai/gpt-5.6-sol
+    provider: openrouter
+    label: GPT-5.6 Sol
+    added: "2026-07-27"
+    status: active
+  - id: x-ai/grok-4.5
+    provider: openrouter
+    label: Grok 4.5
+    added: "2026-07-27"
+    status: active
+  - id: moonshotai/kimi-k3
+    provider: openrouter
+    label: Kimi K3
+    added: "2026-07-27"
+    status: active
+  - id: google/gemini-3.6-flash
+    provider: openrouter
+    label: Gemini 3.6 Flash
+    added: "2026-07-27"
+    status: active

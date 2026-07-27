@@ -1,0 +1,23 @@
+{
+  "name": "vcl-ai-model-arena",
+  "version": "1.0.0",
+  "private": true,
+  "description": "VCL VibeBench — open AI model benchmark by Vibe Coder's Life",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "eval:fun": "promptfoo eval -c tests/fun/promptfooconfig.yaml",
+    "eval:dev": "promptfoo eval -c tests/dev/promptfooconfig.yaml",
+    "eval:all": "npm run eval:fun && npm run eval:dev",
+    "view": "promptfoo view",
+    "results:latest": "node scripts/build-latest-results.js",
+    "validate:registry": "node scripts/validate-registry.js",
+    "validate:models": "node scripts/validate-openrouter-ids.js"
+  },
+  "devDependencies": {
+    "promptfoo": "0.121.19",
+    "js-yaml": "4.1.0"
+  }
+}

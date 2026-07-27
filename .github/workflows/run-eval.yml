@@ -1,7 +1,5 @@
 name: Run VibeBench Eval
 
-# Trigger manually from the Actions tab whenever a new model drops.
-# Results get committed to /results so the repo keeps a running history.
 on:
   workflow_dispatch:
     inputs:
@@ -14,6 +12,13 @@ on:
           - fun
           - dev
 
+concurrency:
+  group: vibebench-eval
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
 jobs:
   eval:
     runs-on: ubuntu-latest
@@ -23,20 +28,43 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
+          cache: npm
+
+      - name: Require OpenRouter secret
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: |
+          if [ -z "$OPENROUTER_API_KEY" ]; then
+            echo "Missing OPENROUTER_API_KEY repository secret"
+            exit 1
+          fi
+
+      - name: Install
+        run: npm ci
+
+      - name: Validate registry alignment
+        run: npm run validate:registry
 
       - name: Run promptfoo eval
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
         run: |
           DATE=$(date +%Y-%m-%d)
-          npx promptfoo@latest eval \
+          echo "Suite=${{ inputs.suite }} Date=$DATE"
+          npx promptfoo eval \
             -c tests/${{ inputs.suite }}/promptfooconfig.yaml \
             -o results/${{ inputs.suite }}-$DATE.json
+          node scripts/write-result-meta.js ${{ inputs.suite }} $DATE maintainer
+          npm run results:latest
 
       - name: Commit results
         run: |
           git config user.name "vibebench-bot"
-          git config user.email "bot@vibecoderslife.com"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add results/
-          git commit -m "Add ${{ inputs.suite }} results $(date +%Y-%m-%d)" || echo "Nothing to commit"
-          git push
+          if git diff --staged --quiet; then
+            echo "Nothing to commit"
+          else
+            git commit -m "Add ${{ inputs.suite }} results $(date +%Y-%m-%d)"
+            git push
+          fi

@@ -1,0 +1,18 @@
+VCL VibeBench
+Copyright (c) 2026 Viktor Kondas / Vibe Coder's Life
+
+This product includes software and references the following:
+
+- promptfoo (MIT) — https://github.com/promptfoo/promptfoo
+  Evaluation CLI used as a dependency. Not forked; used via npm.
+
+- Aider / polyglot-benchmark (Apache-2.0 / Exercism licenses)
+  Planned for Tier 3 (Vibe Score) only. Cloned at run-time when that tier ships;
+  not vendored in this repository for VibeBench 1.0.
+
+Prior art / technique class for future Vibe Vision (1.1):
+Random-dot kinematograms and motion-coherence illusions are a long-standing
+perception technique. Eric Lu / Mixfont popularized a recent presentation of
+this class for frontier-model testing. VCL VibeBench's Vibe Vision (when shipped)
+will be an original implementation of the general technique — not a fork of any
+third-party product, and never branded as "Ghost Font".

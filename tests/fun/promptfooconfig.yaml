@@ -1,21 +1,19 @@
-# VCL Model Arena — Fun Tests
-# For beginners and newsletter readers. Short, shareable, screenshot-friendly.
-# Run: npx promptfoo@latest eval -c tests/fun/promptfooconfig.yaml
+# VCL VibeBench — Fun suite (Tier 1)
+# Scored tests have asserts. Exploratory tests are side-by-side only (no numeric score).
+# Run: npm run eval:fun
 
-description: "VCL Model Arena - Fun Tests"
+description: "VCL VibeBench — Fun Tests"
 
 prompts:
   - "{{prompt}}"
 
-# Swap slugs for whatever's current at https://openrouter.ai/models
-# Comment out retired models instead of deleting them, so past results stay readable.
 providers:
   - id: openrouter:anthropic/claude-opus-4.8
     label: "Claude Opus 4.8"
   - id: openrouter:anthropic/claude-fable-5
     label: "Claude Fable 5"
-  - id: openrouter:openai/gpt-5.6
-    label: "GPT-5.6"
+  - id: openrouter:openai/gpt-5.6-sol
+    label: "GPT-5.6 Sol"
   - id: openrouter:x-ai/grok-4.5
     label: "Grok 4.5"
   - id: openrouter:moonshotai/kimi-k3
@@ -25,6 +23,8 @@ providers:
 
 tests:
   - description: "The classic strawberry test"
+    metadata:
+      scoring: scored
     vars:
       prompt: "How many times does the letter R appear in the word 'strawberry'? Answer with just the number."
     assert:
@@ -32,14 +32,20 @@ tests:
         value: "3"
 
   - description: "Random number consistency check"
+    metadata:
+      scoring: exploratory
     vars:
       prompt: "Give me one random whole number between 0 and 100. Just the number, nothing else."
 
   - description: "Fun fact quality"
+    metadata:
+      scoring: exploratory
     vars:
       prompt: "Tell me one surprising fun fact about octopuses that most people don't know. Two sentences max."
 
   - description: "Simple logic riddle"
+    metadata:
+      scoring: scored
     vars:
       prompt: "A farmer has 17 sheep. All but 9 die. How many sheep are left? Explain your reasoning in one sentence."
     assert:
@@ -47,17 +53,25 @@ tests:
         value: "9"
 
   - description: "Explain like I'm five"
+    metadata:
+      scoring: exploratory
     vars:
       prompt: "Explain what a large language model is to a curious 8-year-old, in 3 sentences or less."
 
   - description: "Quick joke / personality check"
+    metadata:
+      scoring: exploratory
     vars:
       prompt: "Tell me a short, original joke about debugging code."
 
   - description: "Original mini-poem (no copyrighted lyrics/poems involved)"
+    metadata:
+      scoring: exploratory
     vars:
       prompt: "Write an original 3-line haiku about coding in Budapest at night."
 
   - description: "Would-you-rather reasoning"
+    metadata:
+      scoring: exploratory
     vars:
       prompt: "Would you rather fight one horse-sized duck or a hundred duck-sized horses? Give a one-sentence tactical justification."

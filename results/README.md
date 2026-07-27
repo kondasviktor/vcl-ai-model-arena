@@ -1,17 +1,20 @@
 # Results archive
 
-Each eval run gets saved here as `<suite>-<date>.json` (via the GitHub Action or a manual
-`promptfoo eval -o results/fun-2026-07-23.json` run). Over time this becomes a dated log of
-which model won on which test — useful for a "here's how the race has moved" retrospective post.
+Each run should produce:
 
-To turn a result file back into a browsable UI locally:
+- `results/<suite>-<YYYY-MM-DD>.json` — promptfoo output
+- `results/<suite>-<YYYY-MM-DD>.meta.json` — reproducibility metadata
 
-```bash
-npx promptfoo@latest view results/fun-2026-07-23.json
-```
-
-To get a public shareable link instead of a static JSON file:
+Then:
 
 ```bash
-npx promptfoo@latest eval -c tests/fun/promptfooconfig.yaml --share
+npm run results:latest
 ```
+
+Browse a file locally:
+
+```bash
+npx promptfoo view results/fun-YYYY-MM-DD.json
+```
+
+Do not commit API keys, request headers, or absolute local paths.

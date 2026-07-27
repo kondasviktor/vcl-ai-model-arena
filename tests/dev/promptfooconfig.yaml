@@ -1,8 +1,8 @@
-# VCL Model Arena — Developer Tests
-# For vibe coders who want to know which model actually helps them ship.
-# Run: npx promptfoo@latest eval -c tests/dev/promptfooconfig.yaml
+# VCL VibeBench — Dev suite (Tier 1)
+# Scored tests have deterministic asserts. Exploratory tests are qualitative only.
+# Run: npm run eval:dev
 
-description: "VCL Model Arena - Developer Tests"
+description: "VCL VibeBench — Developer Tests"
 
 prompts:
   - "{{prompt}}"
@@ -12,8 +12,8 @@ providers:
     label: "Claude Opus 4.8"
   - id: openrouter:anthropic/claude-fable-5
     label: "Claude Fable 5"
-  - id: openrouter:openai/gpt-5.6
-    label: "GPT-5.6"
+  - id: openrouter:openai/gpt-5.6-sol
+    label: "GPT-5.6 Sol"
   - id: openrouter:x-ai/grok-4.5
     label: "Grok 4.5"
   - id: openrouter:moonshotai/kimi-k3
@@ -23,6 +23,8 @@ providers:
 
 tests:
   - description: "Find a subtle bug (off-by-one)"
+    metadata:
+      scoring: scored
     vars:
       prompt: |
         This function is supposed to return the last 3 items of a list, but it has a bug.
@@ -35,6 +37,8 @@ tests:
         value: "-3"
 
   - description: "Read a real stack trace"
+    metadata:
+      scoring: exploratory
     vars:
       prompt: |
         A user reports their Node.js app crashes on startup with this error. What's the most likely
@@ -45,6 +49,8 @@ tests:
             at processTicksAndRejections (node:internal/process/task_queues:95:5)
 
   - description: "Refactor for readability"
+    metadata:
+      scoring: exploratory
     vars:
       prompt: |
         Refactor this JavaScript into cleaner, more idiomatic code without changing its behavior.
@@ -53,12 +59,16 @@ tests:
         function f(a,b,c){if(a==true){if(b>c){return b}else{return c}}else{return a}}
 
   - description: "Write tests for edge cases"
+    metadata:
+      scoring: exploratory
     vars:
       prompt: |
         Write 3 unit test cases (in plain pseudocode) for a function `divide(a, b)` that should
         catch the trickiest bugs a beginner would miss.
 
   - description: "Fix a broken SQL query"
+    metadata:
+      scoring: scored
     vars:
       prompt: |
         This query is supposed to return each customer's total spend, but it's returning wrong
@@ -67,15 +77,25 @@ tests:
         SELECT customers.name, orders.amount
         FROM customers
         JOIN orders ON customers.id = orders.customer_id;
+    assert:
+      - type: contains
+        value: "GROUP BY"
 
   - description: "Multi-step instruction following"
+    metadata:
+      scoring: scored
     vars:
       prompt: |
         I need a Python function called `slugify` that: (1) lowercases the input, (2) replaces
         spaces with hyphens, (3) strips any character that isn't a-z, 0-9, or a hyphen, and
         (4) collapses multiple hyphens into one. Give me the function and one example call.
+    assert:
+      - type: contains
+        value: "def slugify"
 
   - description: "Explain a tradeoff (architecture judgment)"
+    metadata:
+      scoring: exploratory
     vars:
       prompt: |
         I'm building a side project SaaS with an indie budget. Should I use a queue-based
