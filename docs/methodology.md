@@ -46,6 +46,9 @@ Regenerate the human summary with `npm run results:latest`.
 4. Run `npm run validate:models`
 5. Comment out retired models; do not delete them
 
+
+For local bring-your-own models, set `MODELS=openrouter-id1,id2` (or `npm run eval:smoke`) so `scripts/run-eval.js` rewrites providers into `promptfooconfig.generated.yaml`. Published maintainer results should still use the registry roster without a MODELS override.
+
 ## Cadence
 
 Target a Tier 1 run within 48 hours of a notable frontier release; publish no later than 96 hours. Correctness beats speed.

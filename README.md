@@ -53,6 +53,18 @@ npm run results:latest
 
 Optional share link for a post: `npx promptfoo eval -c tests/fun/promptfooconfig.yaml --share`
 
+
+## Pick any OpenRouter model
+
+Override the roster for a local run (BYO). Official published results still use the active registry only.
+
+```bash
+MODELS=openai/gpt-4o-mini,anthropic/claude-3.5-sonnet npm run eval:fun
+npm run eval:smoke   # cheap 2-model check
+```
+
+Default roster = published maintainer results only.
+
 ## Model roster
 
 Single source: [`models/registry.yaml`](./models/registry.yaml). Comment out retired models; don’t delete them.
