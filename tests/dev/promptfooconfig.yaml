@@ -1,0 +1,83 @@
+# VCL Model Arena — Developer Tests
+# For vibe coders who want to know which model actually helps them ship.
+# Run: npx promptfoo@latest eval -c tests/dev/promptfooconfig.yaml
+
+description: "VCL Model Arena - Developer Tests"
+
+prompts:
+  - "{{prompt}}"
+
+providers:
+  - id: openrouter:anthropic/claude-opus-4.8
+    label: "Claude Opus 4.8"
+  - id: openrouter:anthropic/claude-fable-5
+    label: "Claude Fable 5"
+  - id: openrouter:openai/gpt-5.6
+    label: "GPT-5.6"
+  - id: openrouter:x-ai/grok-4.5
+    label: "Grok 4.5"
+  - id: openrouter:moonshotai/kimi-k3
+    label: "Kimi K3"
+  - id: openrouter:google/gemini-3.6-flash
+    label: "Gemini 3.6 Flash"
+
+tests:
+  - description: "Find a subtle bug (off-by-one)"
+    vars:
+      prompt: |
+        This function is supposed to return the last 3 items of a list, but it has a bug.
+        Find the bug and explain the fix in 2 sentences, then show the corrected code.
+
+        def last_three(items):
+            return items[-4:-1]
+    assert:
+      - type: contains
+        value: "-3"
+
+  - description: "Read a real stack trace"
+    vars:
+      prompt: |
+        A user reports their Node.js app crashes on startup with this error. What's the most likely
+        cause and the first thing you'd check?
+
+        TypeError: Cannot read properties of undefined (reading 'map')
+            at renderList (/app/src/components/List.jsx:14:23)
+            at processTicksAndRejections (node:internal/process/task_queues:95:5)
+
+  - description: "Refactor for readability"
+    vars:
+      prompt: |
+        Refactor this JavaScript into cleaner, more idiomatic code without changing its behavior.
+        Briefly explain what you changed and why.
+
+        function f(a,b,c){if(a==true){if(b>c){return b}else{return c}}else{return a}}
+
+  - description: "Write tests for edge cases"
+    vars:
+      prompt: |
+        Write 3 unit test cases (in plain pseudocode) for a function `divide(a, b)` that should
+        catch the trickiest bugs a beginner would miss.
+
+  - description: "Fix a broken SQL query"
+    vars:
+      prompt: |
+        This query is supposed to return each customer's total spend, but it's returning wrong
+        totals for customers with multiple orders. What's wrong and what's the fix?
+
+        SELECT customers.name, orders.amount
+        FROM customers
+        JOIN orders ON customers.id = orders.customer_id;
+
+  - description: "Multi-step instruction following"
+    vars:
+      prompt: |
+        I need a Python function called `slugify` that: (1) lowercases the input, (2) replaces
+        spaces with hyphens, (3) strips any character that isn't a-z, 0-9, or a hyphen, and
+        (4) collapses multiple hyphens into one. Give me the function and one example call.
+
+  - description: "Explain a tradeoff (architecture judgment)"
+    vars:
+      prompt: |
+        I'm building a side project SaaS with an indie budget. Should I use a queue-based
+        background job system or just cron a script every few minutes for sending scheduled
+        emails to ~500 users/day? Give me a direct recommendation, not a list of options.
