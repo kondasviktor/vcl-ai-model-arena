@@ -60,7 +60,7 @@ A farmer has 17 sheep. All but 9 die. How many sheep are left? Explain your reas
 ### 5. Explain like I'm five *(exploratory)*
 
 ```
-Explain what a large language model is to a curious 8-year-old, in 3 sentences or less.
+Explain what a large language model is to a curious 5-year-old, in 3 sentences or less.
 ```
 
 ### 6. Debugging joke *(exploratory)*
@@ -81,6 +81,41 @@ Write an original 3-line haiku about coding in Budapest at night.
 Would you rather fight one horse-sized duck or a hundred duck-sized horses? Give a one-sentence tactical justification.
 ```
 
+### 9. Who is JSON? *(exploratory)*
+
+```
+Who is JSON?
+```
+
+### 10. Which is larger: 9.11 or 9.9? *(scored — expect `9.9`)*
+
+```
+Which is larger: 9.11 or 9.9? Answer with just the larger number.
+```
+
+---
+
+## What’s in Dev (CLI only)
+
+**Dev** is 10 practical coding / debugging prompts for vibe coders — bug finding, stack traces, refactoring, tests, SQL, multi-step implement, architecture judgment, security, regex, and async races.
+
+Full prompt text lives in [`tests/dev/promptfooconfig.yaml`](./tests/dev/promptfooconfig.yaml) so you can audit before spending API credit. We don’t paste Dev prompts here so the CLI matrix stays the fair multi-model comparison. The suite only sends those open prompts to OpenRouter with **your** key.
+
+| # | What it checks | Scoring |
+|---|---|---|
+| 1 | Off-by-one in a tiny Python helper | scored |
+| 2 | Read a real Node stack trace (`undefined.map`) | exploratory |
+| 3 | Refactor messy JS for readability | exploratory |
+| 4 | Edge-case unit tests for `divide(a, b)` | exploratory |
+| 5 | Broken SQL totals (`GROUP BY`) | scored |
+| 6 | Multi-step: implement `slugify` with 4 rules | scored |
+| 7 | Architecture: queue vs cron for ~500 emails/day | exploratory |
+| 8 | Spot XSS in a short Express template | scored |
+| 9 | Write a basic email regex validator | scored |
+| 10 | Catch an async race on a shared counter | exploratory |
+
+Scored = deterministic assert. Exploratory = side-by-side judgment only — no LLM judge, no blended “best model” score.
+
 ---
 
 ## How you can help (please)
@@ -94,7 +129,7 @@ Would you rather fight one horse-sized duck or a hundred duck-sized horses? Give
 
 ## Latest maintainer results
 
-See [`results/latest.md`](./results/latest.md).
+Models and dates below are from the last committed maintainer run — see [`results/latest.md`](./results/latest.md).
 
 ---
 

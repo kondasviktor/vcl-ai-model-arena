@@ -90,3 +90,50 @@ tests:
         I'm building a side project SaaS with an indie budget. Should I use a queue-based
         background job system or just cron a script every few minutes for sending scheduled
         emails to ~500 users/day? Give me a direct recommendation, not a list of options.
+
+  - description: "Spot the security bug (XSS)"
+    metadata:
+      scoring: scored
+    vars:
+      prompt: |
+        This Express route renders a user-supplied name into HTML. Name the vulnerability in one
+        word and the safest fix in one sentence, then show a corrected one-liner.
+
+        app.get('/hello', (req, res) => {
+          res.send('<h1>Hello ' + req.query.name + '</h1>');
+        });
+    assert:
+      - type: icontains
+        value: "xss"
+      - type: javascript
+        value: "output.toLowerCase().includes('escape') || output.toLowerCase().includes('sanitize') || output.toLowerCase().includes('encode')"
+
+  - description: "Email validation with regex"
+    metadata:
+      scoring: scored
+    vars:
+      prompt: |
+        Write a JavaScript function `isValidEmail(email)` that returns true only for a basic
+        well-formed email address using a regular expression. Keep it short; include the function.
+    assert:
+      - type: contains
+        value: "function"
+      - type: contains
+        value: "@"
+
+  - description: "Find the async race"
+    metadata:
+      scoring: exploratory
+    vars:
+      prompt: |
+        This Node.js snippet is supposed to print 1000, but often prints less. What is the bug,
+        and how do you fix it? Explain in 3 sentences or less, then show corrected code.
+
+        let count = 0;
+        async function bump() {
+          const next = count + 1;
+          await Promise.resolve();
+          count = next;
+        }
+        await Promise.all(Array.from({ length: 1000 }, () => bump()));
+        console.log(count);

@@ -45,7 +45,7 @@ tests:
     metadata:
       scoring: exploratory
     vars:
-      prompt: "Explain what a large language model is to a curious 8-year-old, in 3 sentences or less."
+      prompt: "Explain what a large language model is to a curious 5-year-old, in 3 sentences or less."
 
   - description: "Quick joke / personality check"
     metadata:
@@ -64,3 +64,18 @@ tests:
       scoring: exploratory
     vars:
       prompt: "Would you rather fight one horse-sized duck or a hundred duck-sized horses? Give a one-sentence tactical justification."
+
+  - description: "Who is JSON?"
+    metadata:
+      scoring: exploratory
+    vars:
+      prompt: "Who is JSON?"
+
+  - description: "Which is larger: 9.11 or 9.9?"
+    metadata:
+      scoring: scored
+    vars:
+      prompt: "Which is larger: 9.11 or 9.9? Answer with just the larger number."
+    assert:
+      - type: contains
+        value: "9.9"
