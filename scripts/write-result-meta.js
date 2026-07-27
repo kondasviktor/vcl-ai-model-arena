@@ -2,9 +2,7 @@
 /** Write results/<suite>-<date>.meta.json next to a promptfoo JSON output. */
 const fs = require('fs');
 const path = require('path');
-const crypto = require('crypto');
 const { execSync } = require('child_process');
-const yaml = require('js-yaml');
 
 const [suite, dateArg, label = 'maintainer'] = process.argv.slice(2);
 if (!suite) {
@@ -20,14 +18,36 @@ if (!fs.existsSync(jsonPath)) {
   process.exit(1);
 }
 
-const registryRaw = fs.readFileSync(path.join(root, 'models/registry.yaml'));
-const registry = yaml.load(registryRaw);
 const pkg = JSON.parse(fs.readFileSync(path.join(root, 'package.json'), 'utf8'));
 const version = fs.readFileSync(path.join(root, 'VERSION'), 'utf8').trim();
 let gitSha = 'unknown';
 try {
   gitSha = execSync('git rev-parse HEAD', { cwd: root }).toString().trim();
 } catch {}
+
+const result = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+const models = [];
+const seen = new Set();
+const results = Array.isArray(result.results) ? result.results : [];
+for (const row of results) {
+  const id =
+    row.provider?.id ||
+    row.provider ||
+    row.metadata?.providerId ||
+    null;
+  const cleaned = String(id || '')
+    .replace(/^openrouter:/, '')
+    .trim();
+  if (cleaned && !seen.has(cleaned)) {
+    seen.add(cleaned);
+    models.push(cleaned);
+  }
+}
+if (!models.length && process.env.MODELS) {
+  for (const id of process.env.MODELS.split(',').map((s) => s.trim()).filter(Boolean)) {
+    models.push(id);
+  }
+}
 
 const meta = {
   vibebench_version: version,
@@ -37,9 +57,7 @@ const meta = {
   label,
   runner: process.env.GITHUB_ACTIONS ? 'ci' : 'local',
   git_sha: gitSha,
-  registry_version: registry.version,
-  registry_sha256: crypto.createHash('sha256').update(registryRaw).digest('hex'),
-  models: (registry.models || []).filter((m) => m.status === 'active').map((m) => m.id),
+  models,
   created_at: new Date().toISOString(),
 };
 

@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 /**
- * BYO OpenRouter eval runner.
+ * OpenRouter eval runner (BYOK: your OPENROUTER_API_KEY in .env).
  * Usage:
- *   node scripts/run-eval.js <fun|dev> [--smoke] [-- -o out.json ...]
+ *   MODELS=id1,id2 node scripts/run-eval.js <fun|dev> [-- -o out.json ...]
+ *   node scripts/run-eval.js fun --smoke
  * Env:
- *   MODELS=id1,id2   — comma-separated OpenRouter IDs (overrides registry / smoke)
- *   SMOKE=1          — same as --smoke
+ *   MODELS=id1,id2   — comma-separated OpenRouter IDs (required unless --smoke)
+ *   SMOKE=1          — same as --smoke (cheap fixed pair)
  *   OUT=path         — passed to promptfoo as -o if set
  */
 const fs = require('fs');
@@ -47,7 +48,7 @@ const extraArgs = dashDash >= 0 ? argv.slice(dashDash + 1) : [];
 
 const suite = mainArgs.find((a) => a === 'fun' || a === 'dev');
 if (!suite) {
-  console.error('Usage: node scripts/run-eval.js <fun|dev> [--smoke] [-- promptfoo-args...]');
+  console.error('Usage: MODELS=id1,id2 node scripts/run-eval.js <fun|dev> [--smoke] [-- promptfoo-args...]');
   process.exit(1);
 }
 
@@ -63,17 +64,17 @@ function resolveModels() {
       .filter(Boolean);
   }
   if (smoke) return SMOKE_MODELS.slice();
-  const registry = yaml.load(
-    fs.readFileSync(path.join(root, 'models/registry.yaml'), 'utf8')
-  );
-  return (registry.models || [])
-    .filter((m) => m.status === 'active')
-    .map((m) => m.id);
+  console.error(`Set MODELS to one or more OpenRouter IDs, e.g.:
+  MODELS=anthropic/claude-opus-5,openai/gpt-5.6-sol,google/gemini-3.6-flash npm run eval:${suite}
+
+Browse IDs: https://openrouter.ai/models
+Or run a cheap check: npm run eval:smoke`);
+  process.exit(1);
 }
 
 const models = resolveModels();
 if (!models.length) {
-  console.error('No models resolved (MODELS empty and no active registry models).');
+  console.error('No models resolved (MODELS empty).');
   process.exit(1);
 }
 

@@ -11,6 +11,10 @@ on:
         options:
           - fun
           - dev
+      models:
+        description: "Comma-separated OpenRouter model IDs"
+        required: true
+        default: "google/gemini-3.6-flash,moonshotai/kimi-k3"
 
 concurrency:
   group: vibebench-eval
@@ -42,18 +46,19 @@ jobs:
       - name: Install
         run: npm ci
 
-      - name: Validate registry alignment
-        run: npm run validate:registry
+      - name: Validate model IDs
+        env:
+          MODELS: ${{ inputs.models }}
+        run: npm run validate:models
 
       - name: Run promptfoo eval
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          MODELS: ${{ inputs.models }}
         run: |
           DATE=$(date +%Y-%m-%d)
-          echo "Suite=${{ inputs.suite }} Date=$DATE"
-          npx promptfoo eval \
-            -c tests/${{ inputs.suite }}/promptfooconfig.yaml \
-            -o results/${{ inputs.suite }}-$DATE.json
+          echo "Suite=${{ inputs.suite }} Date=$DATE Models=$MODELS"
+          node scripts/run-eval.js ${{ inputs.suite }} -- -o results/${{ inputs.suite }}-$DATE.json
           node scripts/write-result-meta.js ${{ inputs.suite }} $DATE maintainer
           npm run results:latest
 

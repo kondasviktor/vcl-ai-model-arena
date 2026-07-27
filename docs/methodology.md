@@ -4,50 +4,49 @@
 
 - Product: **VCL VibeBench 1.0.0**
 - Engine: promptfoo (pinned in `package.json`)
-- Providers: OpenRouter model IDs listed in `models/registry.yaml`
+- Providers: any OpenRouter model ID via `MODELS=` (BYOK with `OPENROUTER_API_KEY`)
 
 ## Suites
 
-| Suite | Path | Purpose |
+| Suite | Audience | How to try |
 |---|---|---|
-| Fun | `tests/fun` | Short, shareable checks |
-| Dev | `tests/dev` | Practical coding / debugging prompts |
+| Fun | Everyone | Copy-paste in README **and** CLI (`npm run eval:fun`) |
+| Dev | Vibe coders / developers | CLI only (`npm run eval:dev`) |
 
 ## Scoring
 
 Each test is tagged `metadata.scoring: scored | exploratory`.
 
 - **Scored:** deterministic `contains` / similar asserts. These feed accuracy summaries.
-- **Exploratory:** no assert; compare qualitatively in the promptfoo UI. **No numeric “winner”.**
+- **Exploratory:** no assert; compare qualitatively in the promptfoo UI (or by eye in a chat app). **No numeric “winner.”**
 
 There is **no LLM judge** in 1.0.
 
 ## Run parameters
 
-- Temperature: `0` (registry default; provider may still apply its own decoding)
+- Temperature: `0` when the provider honors it
 - One attempt per prompt per model
 - Official maintainer runs label: `maintainer` in result metadata
 - Community PRs label: `community`
+- Models for a run come from **`MODELS=`** (required), except `npm run eval:smoke` which uses a fixed cheap pair
 
 ## Reproducibility
 
 Every committed result should include:
 
 1. `results/<suite>-<YYYY-MM-DD>.json` — promptfoo output
-2. `results/<suite>-<YYYY-MM-DD>.meta.json` — VibeBench version, promptfoo version, registry hash, git SHA, model IDs, timestamp, runner
+2. `results/<suite>-<YYYY-MM-DD>.meta.json` — VibeBench version, promptfoo version, git SHA, **exact model IDs**, timestamp, runner
 
 Regenerate the human summary with `npm run results:latest`.
 
-## Updating the roster
+## Picking models
 
-1. Check https://openrouter.ai/models
-2. Edit `models/registry.yaml`
-3. Mirror providers in `tests/*/promptfooconfig.yaml` (or regenerate)
-4. Run `npm run validate:models`
-5. Comment out retired models; do not delete them
+1. Browse https://openrouter.ai/models  
+2. Set `MODELS=id1,id2,...`  
+3. Optional: `MODELS=... npm run validate:models`  
+4. `npm run eval:fun` or `npm run eval:dev`
 
-
-For local bring-your-own models, set `MODELS=openrouter-id1,id2` (or `npm run eval:smoke`) so `scripts/run-eval.js` rewrites providers into `promptfooconfig.generated.yaml`. Published maintainer results should still use the registry roster without a MODELS override.
+There is **no frozen model registry** in the repo — model catalogs change too often. Each result file records the IDs that were actually run.
 
 ## Cadence
 

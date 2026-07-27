@@ -11,10 +11,14 @@ If you find an API key, token, or credential in this repository or a results fil
 ## Maintainer incident response
 
 1. Revoke the exposed key at the provider  
-2. Replace `OPENROUTER_API_KEY` in GitHub Actions secrets  
+2. Replace `OPENROUTER_API_KEY` in GitHub Actions secrets (if used)  
 3. Remove the secret from git history if committed  
-4. Note the incident (without the secret) in CHANGELOG  
+4. Note the incident privately (without the secret); mention rotation in the next GitHub Release notes if the repo is public  
 
 ## CI
 
 Paid evals use `workflow_dispatch` only. Fork pull requests must not receive repository secrets.
+
+## BYOK
+
+Local runs use **your** OpenRouter key in `.env` (never commit it). This project does not collect API keys on vibecoderslife.com.

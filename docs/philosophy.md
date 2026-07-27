@@ -14,9 +14,12 @@ Tier 1 (Vibe Check) mixes:
 
 No LLM-as-judge in 1.0. Deterministic asserts only where a single answer exists.
 
-## Why everything is public
+**Fun** prompts are published for copy-paste in any chat UI *and* for CLI multi-model runs.  
+**Dev** prompts are aimed at vibe coders running the CLI.
 
-Forkability is the defensibility. Anyone can re-run the same configs with their own OpenRouter key and check our results. That is the point of “stop trusting benchmark slides.”
+## Why BYOK + forkability
+
+Automated runs use **BYOK** (bring your own [OpenRouter](https://openrouter.ai/) API key). Anyone can re-run the same prompts with models they choose and check our results. That is the point of “stop trusting benchmark slides.”
 
 ## What we are not
 

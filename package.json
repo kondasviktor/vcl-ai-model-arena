@@ -11,11 +11,10 @@
     "eval:fun": "node scripts/run-eval.js fun",
     "eval:dev": "node scripts/run-eval.js dev",
     "eval:all": "npm run eval:fun && npm run eval:dev",
+    "eval:smoke": "node scripts/run-eval.js fun --smoke",
     "view": "promptfoo view",
     "results:latest": "node scripts/build-latest-results.js",
-    "validate:registry": "node scripts/validate-registry.js",
-    "validate:models": "node scripts/validate-openrouter-ids.js",
-    "eval:smoke": "node scripts/run-eval.js fun --smoke"
+    "validate:models": "node scripts/validate-openrouter-ids.js"
   },
   "devDependencies": {
     "promptfoo": "0.121.19",
