@@ -1,4 +1,4 @@
-name: Run VibeBench Eval
+name: Run VCL VibeBench Eval
 
 on:
   workflow_dispatch:

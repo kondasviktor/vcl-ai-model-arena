@@ -22,3 +22,8 @@ tmp/
 
 # Generated eval configs (MODELS= / smoke)
 tests/**/promptfooconfig.generated.yaml
+
+# Local canvas / blog extract scratch (not part of the public archive)
+results/.canvas-*
+results/.fun-*
+results/.canvas-extract-*.json

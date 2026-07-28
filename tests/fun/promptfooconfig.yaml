@@ -17,8 +17,8 @@ tests:
     vars:
       prompt: "How many times does the letter R appear in the word 'strawberry'? Answer with just the number."
     assert:
-      - type: contains
-        value: "3"
+      - type: regex
+        value: '^\s*3\s*$'
 
   - description: "Random number consistency check"
     metadata:
@@ -77,5 +77,5 @@ tests:
     vars:
       prompt: "Which is larger: 9.11 or 9.9? Answer with just the larger number."
     assert:
-      - type: contains
-        value: "9.9"
+      - type: regex
+        value: '^\s*9\.9\s*$'

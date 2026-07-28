@@ -1,4 +1,4 @@
-# Methodology — VibeBench 1.0 (Tier 1)
+# Methodology — VCL VibeBench 1.0 (Tier 1)
 
 ## Version
 
@@ -17,7 +17,7 @@
 
 Each test is tagged `metadata.scoring: scored | exploratory`.
 
-- **Scored:** deterministic `contains` / similar asserts. These feed accuracy summaries.
+- **Scored:** deterministic `contains` / `regex` asserts. Exact-answer Fun prompts use `regex` so “answer with just the number” is enforced, not only correctness. These feed accuracy summaries.
 - **Exploratory:** no assert; compare qualitatively in the promptfoo UI (or by eye in a chat app). **No numeric “winner.”**
 
 There is **no LLM judge** in 1.0.
@@ -35,7 +35,7 @@ There is **no LLM judge** in 1.0.
 Every committed result should include:
 
 1. `results/<suite>-<YYYY-MM-DD>.json` — promptfoo output
-2. `results/<suite>-<YYYY-MM-DD>.meta.json` — VibeBench version, promptfoo version, git SHA, **exact model IDs**, timestamp, runner
+2. `results/<suite>-<YYYY-MM-DD>.meta.json` — VCL VibeBench version, promptfoo version, git SHA, **exact model IDs**, timestamp, runner
 
 Regenerate the human summary with `npm run results:latest`.
 

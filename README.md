@@ -15,7 +15,7 @@ If you want a fair multi-model matrix, run the same prompts locally with **BYOK*
 ## Why this exists
 
 Vendor slides and third-party charts often answer “who looks smartest on a fixed exam.”  
-VibeBench asks a different question: **which model helps you with everyday practical tasks this week?**
+VCL VibeBench asks a different question: **which model helps you with everyday practical tasks this week?**
 
 Tier 1 (**Vibe Check**) ships two suites:
 
@@ -120,10 +120,10 @@ Scored = deterministic assert. Exploratory = side-by-side judgment only — no L
 
 ## How you can help (please)
 
-1. **Star this repo** if VibeBench is useful — stars help others find an honest, re-runnable comparison when a new model drops, and they tell us the project is worth maintaining.
-2. **Fork it** when you want your own suite, extra prompts, or a private comparison for your team — that’s the point of open fixtures.
-3. **Run the CLI matrix (BYOK)** if you can — paste-into-one-chat is great for a quick vibe check; a local run with your OpenRouter key compares **many models on the exact same prompts** in one go.
-4. **[Subscribe to the Vibe Coder's Life newsletter](https://vibecoderslife.com/?utm_source=github&utm_medium=readme&utm_campaign=vibebench#subscribe-email)** for result write-ups when we re-run after notable model releases — no need to live in GitHub to stay in the loop.
+1. ⭐ **Star this repo** if VCL VibeBench is useful — stars help others find an honest, re-runnable comparison when a new model drops, and they tell us the project is worth maintaining.
+2. 🍴 **Fork it** when you want your own suite, extra prompts, or a private comparison for your team — that’s the point of open fixtures.
+3. 💻 **Run the CLI matrix (BYOK)** if you can — paste-into-one-chat is great for a quick vibe check; a local run with your OpenRouter key compares **many models on the exact same prompts** in one go.
+4. ✉️ **[Subscribe to the Vibe Coder's Life newsletter](https://vibecoderslife.com/?utm_source=github&utm_medium=readme&utm_campaign=vibebench#subscribe-email)** for result write-ups when we re-run after notable model releases — no need to live in GitHub to stay in the loop.
 
 ---
 
@@ -180,7 +180,7 @@ MODELS=google/gemini-3.6-flash,moonshotai/kimi-k3 \
 
 ## Docs
 
-- [docs/philosophy.md](./docs/philosophy.md) — why VibeBench exists  
+- [docs/philosophy.md](./docs/philosophy.md) — why VCL VibeBench exists  
 - [docs/methodology.md](./docs/methodology.md) — scoring and reproducibility  
 - [docs/ROADMAP.md](./docs/ROADMAP.md) — 1.1 Vision · 1.2 Score  
 - [CONTRIBUTING.md](./CONTRIBUTING.md) · [SECURITY.md](./SECURITY.md)

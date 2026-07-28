@@ -6,8 +6,6 @@
   "label": "maintainer",
   "runner": "local",
   "git_sha": "78a2dfa8a3e7c465aeca37b52d77c681061f26c8",
-  "registry_version": "1.0.0",
-  "registry_sha256": "cef90c16d1a1c787f902ee5f00650c1c9c2e13c1ceb06935440666935c112daa",
   "models": [
     "google/gemini-3.6-flash",
     "moonshotai/kimi-k3"

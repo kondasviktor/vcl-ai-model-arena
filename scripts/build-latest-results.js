@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /**
  * Build results/latest.md from the newest result JSON + matching .meta.json pairs.
+ * Reads Promptfoo v3 nested results.results; scored vs exploratory are reported separately.
  */
 const fs = require('fs');
 const path = require('path');
@@ -12,7 +13,8 @@ function listPairs() {
   if (!fs.existsSync(resultsDir)) return [];
   return fs
     .readdirSync(resultsDir)
-    .filter((f) => f.endsWith('.json') && !f.endsWith('.meta.json'))
+    .filter((f) => f.endsWith('.json') && !f.endsWith('.meta.json') && !f.startsWith('.'))
+    .filter((f) => !f.includes('-smoke-'))
     .map((f) => {
       const base = f.replace(/\.json$/, '');
       return {
@@ -26,41 +28,90 @@ function listPairs() {
     .sort((a, b) => a.mtime - b.mtime);
 }
 
+function extractResultRows(raw) {
+  if (raw?.results?.results && Array.isArray(raw.results.results)) {
+    return raw.results.results;
+  }
+  if (Array.isArray(raw.results)) return raw.results;
+  if (Array.isArray(raw)) return raw;
+  return null;
+}
+
+function isScoredRow(row) {
+  const scoring = row.testCase?.metadata?.scoring;
+  if (scoring === 'exploratory') return false;
+  if (scoring === 'scored') return true;
+  return Boolean(row.testCase?.assert?.length);
+}
+
+function providerLabel(row) {
+  return row.provider?.label || row.provider?.id || String(row.provider || 'unknown');
+}
+
+function rowPassed(row) {
+  return row.success === true || row.score === 1 || row.gradingResult?.pass === true;
+}
+
+function rowFailed(row) {
+  return row.success === false || row.gradingResult?.pass === false;
+}
+
 function summarize(jsonPath, metaPath) {
   const raw = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
   const meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'));
-  const results = raw.results || raw;
+  const rows = extractResultRows(raw);
   const lines = [];
   lines.push(`### ${meta.suite || 'suite'} — ${meta.date || 'unknown date'}`);
   lines.push('');
-  lines.push(`- VibeBench: ${meta.vibebench_version || '?'}`);
+  lines.push(`- VCL VibeBench: ${meta.vibebench_version || '?'}`);
   lines.push(`- promptfoo: ${meta.promptfoo_version || '?'}`);
   lines.push(`- Runner: ${meta.runner || '?'}`);
   lines.push(`- Label: ${meta.label || 'maintainer'}`);
   if (meta.models) lines.push(`- Models: ${meta.models.join(', ')}`);
+  if (meta.notes) lines.push(`- Notes: ${meta.notes}`);
   lines.push('');
 
-  // Best-effort scored pass summary if promptfoo shape has success flags
-  if (Array.isArray(results)) {
-    const byProvider = {};
-    for (const row of results) {
-      const provider = row.provider?.label || row.provider?.id || row.provider || 'unknown';
-      if (!byProvider[provider]) byProvider[provider] = { pass: 0, fail: 0, total: 0 };
-      const ok = row.success === true || row.score === 1 || row.gradingResult?.pass === true;
-      byProvider[provider].total += 1;
-      if (ok) byProvider[provider].pass += 1;
-      else if (row.success === false || row.gradingResult?.pass === false) byProvider[provider].fail += 1;
-    }
-    lines.push('| Model | Assert passes | Total graded rows |');
-    lines.push('|---|---:|---:|');
-    for (const [name, s] of Object.entries(byProvider)) {
-      lines.push(`| ${name} | ${s.pass} | ${s.total} |`);
-    }
-    lines.push('');
-    lines.push('_Exploratory prompts are not included in a blended “best model” score. See methodology._');
-  } else {
+  if (!Array.isArray(rows) || !rows.length) {
     lines.push('_Open the JSON in `promptfoo view` for the full matrix._');
+    lines.push('');
+    lines.push(`Files: \`${path.basename(jsonPath)}\` + \`${path.basename(metaPath)}\``);
+    lines.push('');
+    return lines.join('\n');
   }
+
+  const scoredByProvider = {};
+  const exploratoryByProvider = {};
+
+  for (const row of rows) {
+    const name = providerLabel(row);
+    if (isScoredRow(row)) {
+      if (!scoredByProvider[name]) scoredByProvider[name] = { pass: 0, fail: 0, total: 0 };
+      scoredByProvider[name].total += 1;
+      if (rowPassed(row)) scoredByProvider[name].pass += 1;
+      else if (rowFailed(row)) scoredByProvider[name].fail += 1;
+    } else {
+      if (!exploratoryByProvider[name]) exploratoryByProvider[name] = { total: 0 };
+      exploratoryByProvider[name].total += 1;
+    }
+  }
+
+  lines.push('#### Scored prompts (deterministic asserts)');
+  lines.push('');
+  lines.push('| Model | Pass | Fail | Scored total |');
+  lines.push('|---|---:|---:|---:|');
+  for (const [name, s] of Object.entries(scoredByProvider).sort()) {
+    lines.push(`| ${name} | ${s.pass} | ${s.fail} | ${s.total} |`);
+  }
+  lines.push('');
+  lines.push('#### Exploratory prompts (qualitative — not scored)');
+  lines.push('');
+  lines.push('| Model | Exploratory prompts |');
+  lines.push('|---|---:|');
+  for (const [name, s] of Object.entries(exploratoryByProvider).sort()) {
+    lines.push(`| ${name} | ${s.total} |`);
+  }
+  lines.push('');
+  lines.push('_No blended “best model” score. Exploratory rows are for side-by-side judgment only. See [methodology](../docs/methodology.md)._');
   lines.push('');
   lines.push(`Files: \`${path.basename(jsonPath)}\` + \`${path.basename(metaPath)}\``);
   lines.push('');
@@ -84,7 +135,10 @@ function main() {
   const latestBySuite = {};
   for (const p of pairs) {
     const suite = p.base.split('-')[0];
-    latestBySuite[suite] = p;
+    const existing = latestBySuite[suite];
+    if (!existing || p.base.localeCompare(existing.base) > 0) {
+      latestBySuite[suite] = p;
+    }
   }
 
   const parts = [

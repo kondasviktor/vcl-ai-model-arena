@@ -28,8 +28,10 @@ try {
 const result = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
 const models = [];
 const seen = new Set();
-const results = Array.isArray(result.results) ? result.results : [];
-for (const row of results) {
+const rows =
+  (result.results && Array.isArray(result.results.results) && result.results.results) ||
+  (Array.isArray(result.results) ? result.results : []);
+for (const row of rows) {
   const id =
     row.provider?.id ||
     row.provider ||

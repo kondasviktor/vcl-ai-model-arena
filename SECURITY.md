@@ -5,7 +5,7 @@
 If you find an API key, token, or credential in this repository or a results file:
 
 1. **Do not open a public issue containing the secret**
-2. Email **hello@vibecoderslife.com** with subject `VibeBench security`
+2. Email **hello@vibecoderslife.com** with subject `VCL VibeBench security`
 3. We will rotate credentials and scrub history as needed
 
 ## Maintainer incident response
