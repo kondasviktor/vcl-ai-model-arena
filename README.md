@@ -124,6 +124,7 @@ Scored = deterministic assert. Exploratory = side-by-side judgment only — no L
 2. 🍴 **Fork it** when you want your own suite, extra prompts, or a private comparison for your team — that’s the point of open fixtures.
 3. 💻 **Run the CLI matrix (BYOK)** if you can — paste-into-one-chat is great for a quick vibe check; a local run with your OpenRouter key compares **many models on the exact same prompts** in one go.
 4. ✉️ **[Subscribe to the Vibe Coder's Life newsletter](https://vibecoderslife.com/?utm_source=github&utm_medium=readme&utm_campaign=vibebench#subscribe-email)** for result write-ups when we re-run after notable model releases — no need to live in GitHub to stay in the loop.
+5. ☕ **[Buy Me a Coffee](https://buymeacoffee.com/kondasviktor)** if you want to support maintenance — optional tips help keep VCL VibeBench updated when new models drop.
 
 ---
 
