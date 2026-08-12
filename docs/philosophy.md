@@ -19,7 +19,7 @@ No LLM-as-judge in 1.0. Deterministic asserts only where a single answer exists.
 
 ## Why BYOK + forkability
 
-Automated runs use **BYOK** (bring your own [OpenRouter](https://openrouter.ai/) API key). Anyone can re-run the same prompts with models they choose and check our results. That is the point of “stop trusting benchmark slides.”
+Automated runs use **BYOK** (bring your own API key). Default path: [OpenRouter](https://openrouter.ai/). Optional experimental path: [Hetzner Experiments Inference](https://experiments.hetzner.com/docs/inference) (`PROVIDER=hetzner`). Anyone can re-run the same prompts with models they choose and check our results. That is the point of “stop trusting benchmark slides.”
 
 ## What we are not
 

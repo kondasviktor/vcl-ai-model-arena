@@ -1,0 +1,11 @@
+{
+  "answer": "PIXEL",
+  "decoy": null,
+  "frame_count": 12,
+  "width": 480,
+  "height": 270,
+  "speed_px_s": 120,
+  "density": 0.25,
+  "protocol": "png-sequence",
+  "draft": true
+}

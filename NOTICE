@@ -10,9 +10,16 @@ This product includes software and references the following:
   Planned for Tier 3 (Vibe Score) only. Cloned at run-time when that tier ships;
   not vendored in this repository for VibeBench 1.0.
 
-Prior art / technique class for future Vibe Vision (1.1):
+Optional BYOK path — Hetzner Experiments Inference (OpenAI-compatible API):
+  https://experiments.hetzner.com/docs/inference
+  Users bring their own Experiments API token. Models remain under upstream licenses
+  (as published by Hetzner), e.g. DeepSeek-V4-Flash / GLM-5.2 (MIT), Kimi-K2.7-Code
+  (Modified MIT), Qwen3.6-35B-A3B (Apache-2.0). See each model’s Hugging Face license.
+  VCL VibeBench does not redistribute model weights.
+
+Prior art / technique class for Vibe Vision (1.1):
 Random-dot kinematograms and motion-coherence illusions are a long-standing
-perception technique. Eric Lu / Mixfont popularized a recent presentation of
-this class for frontier-model testing. VCL VibeBench's Vibe Vision (when shipped)
-will be an original implementation of the general technique — not a fork of any
-third-party product, and never branded as "Ghost Font".
+perception technique. Recent consumer demos of this class exist for frontier-model
+testing. VCL VibeBench's Vibe Vision is an original implementation of the general
+technique — not a fork of any third-party product, never branded as a third-party
+name, and MIT-licensed (fork and modify).

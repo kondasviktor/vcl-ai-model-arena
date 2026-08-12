@@ -1,18 +1,31 @@
 #!/usr/bin/env node
 /**
- * OpenRouter eval runner (BYOK: your OPENROUTER_API_KEY in .env).
+ * VCL VibeBench eval runner (BYOK).
+ *
+ * Default provider: OpenRouter (OPENROUTER_API_KEY + MODELS=).
+ * Optional: PROVIDER=hetzner + HETZNER_INFERENCE_API_KEY (Experiments Inference, BYOK).
+ *
  * Usage:
- *   MODELS=id1,id2 node scripts/run-eval.js <fun|dev> [-- -o out.json ...]
+ *   MODELS=id1,id2 node scripts/run-eval.js <fun|dev|vision> [-- -o out.json ...]
  *   node scripts/run-eval.js fun --smoke
+ *   PROVIDER=hetzner MODELS=Qwen/Qwen3.6-35B-A3B-FP8 npm run eval:fun
+ *
  * Env:
- *   MODELS=id1,id2   — comma-separated OpenRouter IDs (required unless --smoke)
- *   SMOKE=1          — same as --smoke (cheap fixed pair)
- *   OUT=path         — passed to promptfoo as -o if set
+ *   PROVIDER=openrouter|hetzner  — default openrouter
+ *   MODELS=id1,id2               — provider-specific IDs (OpenRouter any; Hetzner allowlist)
+ *   SMOKE=1                      — cheap fixed OpenRouter pair (ignored for Hetzner defaults)
+ *   OUT=path                     — passed to promptfoo as -o if set
  */
 const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
 const yaml = require('js-yaml');
+const {
+  HETZNER_API_BASE,
+  HETZNER_KEY_ENV,
+  HETZNER_MODELS,
+  HETZNER_SMOKE_MODEL,
+} = require('./hetzner-models');
 
 const root = path.join(__dirname, '..');
 
@@ -39,16 +52,20 @@ function loadDotEnv() {
 
 loadDotEnv();
 
-const SMOKE_MODELS = ['google/gemini-3.6-flash', 'moonshotai/kimi-k3'];
+const OPENROUTER_SMOKE_MODELS = ['google/gemini-3.6-flash', 'moonshotai/kimi-k3'];
+const HETZNER_ALLOW = new Set(HETZNER_MODELS);
 
 const argv = process.argv.slice(2);
 const dashDash = argv.indexOf('--');
 const mainArgs = dashDash >= 0 ? argv.slice(0, dashDash) : argv;
 const extraArgs = dashDash >= 0 ? argv.slice(dashDash + 1) : [];
 
-const suite = mainArgs.find((a) => a === 'fun' || a === 'dev');
+const suite = mainArgs.find((a) => a === 'fun' || a === 'dev' || a === 'vision');
 if (!suite) {
-  console.error('Usage: MODELS=id1,id2 node scripts/run-eval.js <fun|dev> [--smoke] [-- promptfoo-args...]');
+  console.error(
+    'Usage: MODELS=id1,id2 node scripts/run-eval.js <fun|dev|vision> [--smoke] [-- promptfoo-args...]'
+  );
+  console.error('Optional: PROVIDER=hetzner HETZNER_INFERENCE_API_KEY=… (BYOK Experiments Inference)');
   process.exit(1);
 }
 
@@ -57,13 +74,20 @@ const smoke =
   process.env.SMOKE === '1' ||
   process.env.SMOKE === 'true';
 
-function resolveModels() {
-  if (process.env.MODELS && process.env.MODELS.trim()) {
-    return process.env.MODELS.split(',')
-      .map((s) => s.trim())
-      .filter(Boolean);
-  }
-  if (smoke) return SMOKE_MODELS.slice();
+const providerRaw = (process.env.PROVIDER || 'openrouter').trim().toLowerCase();
+const provider = providerRaw === 'hetzner' ? 'hetzner' : 'openrouter';
+
+function parseModelsEnv() {
+  if (!process.env.MODELS || !process.env.MODELS.trim()) return [];
+  return process.env.MODELS.split(',')
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
+
+function resolveModelsOpenRouter() {
+  const fromEnv = parseModelsEnv();
+  if (fromEnv.length) return fromEnv;
+  if (smoke) return OPENROUTER_SMOKE_MODELS.slice();
   console.error(`Set MODELS to one or more OpenRouter IDs, e.g.:
   MODELS=anthropic/claude-opus-5,openai/gpt-5.6-sol,google/gemini-3.6-flash npm run eval:${suite}
 
@@ -72,7 +96,50 @@ Or run a cheap check: npm run eval:smoke`);
   process.exit(1);
 }
 
-const models = resolveModels();
+function resolveModelsHetzner() {
+  const fromEnv = parseModelsEnv();
+  let models;
+  if (fromEnv.length) {
+    models = fromEnv;
+  } else if (smoke) {
+    models = [HETZNER_SMOKE_MODEL];
+  } else {
+    models = HETZNER_MODELS.slice();
+  }
+  const bad = models.filter((id) => !HETZNER_ALLOW.has(id));
+  if (bad.length) {
+    console.error(
+      `Unknown Hetzner model ID(s): ${bad.join(', ')}\n` +
+        `Allowed (from Hetzner Experiments docs):\n  ${HETZNER_MODELS.join('\n  ')}\n` +
+        `See https://experiments.hetzner.com/docs/inference`
+    );
+    process.exit(1);
+  }
+  return models;
+}
+
+function requireKey(name) {
+  const v = process.env[name];
+  if (!v || !String(v).trim()) {
+    console.error(
+      `Missing ${name}. BYOK only — put your own key in .env (never commit it).\n` +
+        (name === HETZNER_KEY_ENV
+          ? 'Create a token: https://experiments.hetzner.com → Apps → Inference → Create API Token'
+          : 'Get a key: https://openrouter.ai/keys')
+    );
+    process.exit(1);
+  }
+}
+
+if (provider === 'hetzner') {
+  requireKey(HETZNER_KEY_ENV);
+} else {
+  requireKey('OPENROUTER_API_KEY');
+}
+
+const models =
+  provider === 'hetzner' ? resolveModelsHetzner() : resolveModelsOpenRouter();
+
 if (!models.length) {
   console.error('No models resolved (MODELS empty).');
   process.exit(1);
@@ -86,13 +153,35 @@ if (!fs.existsSync(configPath)) {
 }
 
 const config = yaml.load(fs.readFileSync(configPath, 'utf8'));
-config.providers = models.map((id) => ({
-  id: 'openrouter:' + id,
-  label: id,
-}));
+
+if (provider === 'hetzner') {
+  console.error(
+    'run-eval: PROVIDER=hetzner — experimental Hetzner Inference (BYOK, free while experimental, ~10 req/min). No SLA.'
+  );
+  config.providers = models.map((id) => ({
+    id: 'openai:chat:' + id,
+    label: 'hetzner:' + id,
+    config: {
+      apiBaseUrl: HETZNER_API_BASE,
+      apiKeyEnvar: HETZNER_KEY_ENV,
+      temperature: 0,
+    },
+  }));
+  // Avoid 429 under Hetzner request-rate limits (10/min).
+  config.evaluateOptions = Object.assign({}, config.evaluateOptions || {}, {
+    maxConcurrency: 1,
+  });
+} else {
+  config.providers = models.map((id) => ({
+    id: 'openrouter:' + id,
+    label: id,
+  }));
+}
+
 fs.writeFileSync(generatedPath, yaml.dump(config, { lineWidth: 120 }) + '\n');
 console.error(
-  `run-eval: suite=${suite} models=${models.length}${smoke && !process.env.MODELS ? ' (smoke)' : ''} → ${path.relative(root, generatedPath)}`
+  `run-eval: provider=${provider} suite=${suite} models=${models.length}` +
+    `${smoke && !parseModelsEnv().length ? ' (smoke)' : ''} → ${path.relative(root, generatedPath)}`
 );
 
 const promptfooArgs = ['promptfoo', 'eval', '-c', generatedPath];

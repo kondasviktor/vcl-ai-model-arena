@@ -5,7 +5,7 @@
 [VCL VibeBench](https://github.com/kondasviktor/vcl-ai-model-arena) is an open, forkable set of **practical prompts** for comparing AI models — by [Vibe Coder's Life](https://vibecoderslife.com/?utm_source=github&utm_medium=readme&utm_campaign=vibebench).
 
 You can try the short **Fun** checks in any chat UI (ChatGPT, Claude, Gemini, Grok…).  
-If you want a fair multi-model matrix, run the same prompts locally with **BYOK** (bring your own [OpenRouter](https://openrouter.ai/) API key) and **pick any OpenRouter model**.
+If you want a fair multi-model matrix, run the same prompts locally with **BYOK** (bring your own API key) via **[OpenRouter](https://openrouter.ai/)** (default) or optionally **[Hetzner Experiments Inference](https://experiments.hetzner.com/docs/inference)** — and **pick the models you want to compare**.
 
 > Display name: **VCL VibeBench** · GitHub: `kondasviktor/vcl-ai-model-arena`  
 > Built for developers, makers, indie hackers, and AI enthusiasts — not academic leaderboard theater.
@@ -25,6 +25,8 @@ Tier 1 (**Vibe Check**) ships two suites:
 Scored prompts have a clear expected answer. Exploratory prompts are for side-by-side judgment — **no blended “best model” score**, no LLM judge in 1.0. Details: [docs/methodology.md](./docs/methodology.md).
 
 Coming next: **Vibe Vision (1.1)** · **Vibe Score (1.2)** — [docs/ROADMAP.md](./docs/ROADMAP.md).
+
+> **Maintainer note:** Vibe Vision generator + `tests/vision` exist in-repo as an **unreleased draft**. Do not announce 1.1 until the VCL demo go-live is approved.
 
 ---
 
@@ -136,8 +138,8 @@ Models and dates below are from the last committed maintainer run — see [`resu
 
 ## Run the full matrix (BYOK + pick any model)
 
-**BYOK** = put **your** OpenRouter API key in `.env`. We don’t run visitor evals on our credit.  
-**Pick any model** = set `MODELS` to any OpenRouter ID(s) from [openrouter.ai/models](https://openrouter.ai/models).
+**BYOK** = put **your** API key in `.env`. We don’t run visitor evals on our credit.  
+**Default provider:** [OpenRouter](https://openrouter.ai/) — set `MODELS` to any OpenRouter ID(s) from [openrouter.ai/models](https://openrouter.ai/models).
 
 ```bash
 git clone https://github.com/kondasviktor/vcl-ai-model-arena.git
@@ -151,7 +153,7 @@ MODELS=anthropic/claude-opus-5,openai/gpt-5.6-sol,google/gemini-3.6-flash npm ru
 # Dev suite — coding / debugging (vibe coders)
 MODELS=anthropic/claude-opus-5,openai/gpt-5.6-sol,google/gemini-3.6-flash npm run eval:dev
 
-# Cheap sanity check (2 inexpensive models, Fun only)
+# Cheap sanity check (2 inexpensive OpenRouter models, Fun only)
 npm run eval:smoke
 
 # Optional: confirm IDs exist on OpenRouter
@@ -159,6 +161,46 @@ MODELS=anthropic/claude-opus-5,openai/gpt-5.6-sol npm run validate:models
 
 npx promptfoo view            # local results UI
 ```
+
+### Optional: Hetzner Experiments Inference (BYOK)
+
+OpenRouter stays the default. You can also run the same Fun/Dev prompts against **Hetzner’s experimental OpenAI-compatible Inference API** with **your own** Experiments token (not a Hetzner Cloud console token).
+
+1. Sign in at [experiments.hetzner.com](https://experiments.hetzner.com) → **Apps → Inference → Create API Token**  
+2. Put the token in `.env` as `HETZNER_INFERENCE_API_KEY`  
+3. Set `PROVIDER=hetzner`
+
+Allowlisted model IDs (must match Hetzner docs):
+
+| Label | Model ID |
+|---|---|
+| Kimi K2.7 Code | `Kimi-K2.7-Code` |
+| DeepSeek V4 Flash | `DeepSeek-V4-Flash-0731` |
+| GLM 5.2 | `GLM-5.2-NVFP4` |
+| Qwen 3.6 35B-A3B | `Qwen/Qwen3.6-35B-A3B-FP8` |
+
+```bash
+# All four (default when MODELS unset under PROVIDER=hetzner)
+PROVIDER=hetzner npm run eval:fun
+
+# Or pick models explicitly
+PROVIDER=hetzner \
+MODELS=Kimi-K2.7-Code,DeepSeek-V4-Flash-0731,GLM-5.2-NVFP4,Qwen/Qwen3.6-35B-A3B-FP8 \
+npm run eval:fun
+
+# Cheap Hetzner sanity check (Qwen only, Fun)
+npm run eval:hetzner:smoke
+
+PROVIDER=hetzner npm run validate:models
+```
+
+Notes:
+
+- Free **while Hetzner marks Inference as experimental**; they may introduce billing later — no SLA.  
+- EU-**hosted** open weights; the models themselves are not “European-developed.”  
+- Rate limits are tight (~10 requests/min); the runner uses concurrency **1** for Hetzner.  
+- CI / GitHub Actions stays **OpenRouter-only** — bring your own Hetzner key locally.  
+- Docs: [experiments.hetzner.com/docs/inference](https://experiments.hetzner.com/docs/inference)
 
 After a run:
 
