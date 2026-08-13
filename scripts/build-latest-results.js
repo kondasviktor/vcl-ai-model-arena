@@ -103,15 +103,19 @@ function summarize(jsonPath, metaPath) {
     lines.push(`| ${name} | ${s.pass} | ${s.fail} | ${s.total} |`);
   }
   lines.push('');
-  lines.push('#### Exploratory prompts (qualitative — not scored)');
-  lines.push('');
-  lines.push('| Model | Exploratory prompts |');
-  lines.push('|---|---:|');
-  for (const [name, s] of Object.entries(exploratoryByProvider).sort()) {
-    lines.push(`| ${name} | ${s.total} |`);
+  if (Object.keys(exploratoryByProvider).length) {
+    lines.push('#### Exploratory prompts (qualitative — not scored)');
+    lines.push('');
+    lines.push('| Model | Exploratory prompts |');
+    lines.push('|---|---:|');
+    for (const [name, s] of Object.entries(exploratoryByProvider).sort()) {
+      lines.push(`| ${name} | ${s.total} |`);
+    }
+    lines.push('');
+    lines.push('_No blended “best model” score. Exploratory rows are for side-by-side judgment only. See [methodology](../docs/methodology.md)._');
+  } else {
+    lines.push('_All tasks in this suite are scored (unit-test pass/fail). No blended “best model” across Fun/Dev/Score. See [methodology](../docs/methodology.md)._');
   }
-  lines.push('');
-  lines.push('_No blended “best model” score. Exploratory rows are for side-by-side judgment only. See [methodology](../docs/methodology.md)._');
   lines.push('');
   lines.push(`Files: \`${path.basename(jsonPath)}\` + \`${path.basename(metaPath)}\``);
   lines.push('');
@@ -124,7 +128,7 @@ function main() {
     const stub = [
       '# Latest VCL VibeBench results',
       '',
-      '_No result+meta pairs yet. Run `npm run eval:fun` / `eval:dev`, write a `.meta.json`, then re-run `npm run results:latest`._',
+      '_No result+meta pairs yet. Run `npm run eval:fun` / `eval:dev` / `eval:score`, write a `.meta.json`, then re-run `npm run results:latest`._',
       '',
     ].join('\n');
     fs.writeFileSync(outPath, stub);

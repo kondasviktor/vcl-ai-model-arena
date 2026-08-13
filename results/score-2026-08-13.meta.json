@@ -1,0 +1,14 @@
+{
+  "vibebench_version": "1.0.0",
+  "promptfoo_version": "0.121.19",
+  "suite": "score",
+  "date": "2026-08-13",
+  "label": "maintainer",
+  "runner": "local",
+  "git_sha": "51501c0e7863586ff9871a4f881194328deb72b1",
+  "models": [
+    "x-ai/grok-4.6"
+  ],
+  "created_at": "2026-08-13T14:01:52.958Z",
+  "notes": "First Score (1.2) maintainer run. OpenRouter x-ai/grok-4.6 (Cursor Grok 4.6 same weights). 9/12 unit tests passed. Fail: parseQuery, deepGet, titleCase. promptfoo eval-5F6-2026-08-13T14:01:16."
+}

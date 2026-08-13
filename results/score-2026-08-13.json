@@ -1,0 +1,1794 @@
+{
+  "evalId": "eval-5F6-2026-08-13T14:01:16",
+  "results": {
+    "version": 3,
+    "timestamp": "2026-08-13T14:01:16.118Z",
+    "prompts": [
+      {
+        "id": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "raw": "{{prompt}}",
+        "label": "{{prompt}}",
+        "provider": "x-ai/grok-4.6",
+        "metrics": {
+          "score": 9,
+          "testPassCount": 9,
+          "testFailCount": 3,
+          "testErrorCount": 0,
+          "assertPassCount": 9,
+          "assertFailCount": 3,
+          "totalLatencyMs": 70800,
+          "tokenUsage": {
+            "prompt": 3282,
+            "completion": 4955,
+            "cached": 0,
+            "total": 8237,
+            "numRequests": 12,
+            "completionDetails": {
+              "reasoning": 4009,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 1536,
+              "cacheCreationInputTokens": 0
+            },
+            "assertions": {
+              "total": 0,
+              "prompt": 0,
+              "completion": 0,
+              "cached": 0,
+              "numRequests": 0,
+              "completionDetails": {
+                "reasoning": 0,
+                "acceptedPrediction": 0,
+                "rejectedPrediction": 0,
+                "cacheReadInputTokens": 0,
+                "cacheCreationInputTokens": 0
+              }
+            }
+          },
+          "namedScores": {},
+          "namedScoresCount": {},
+          "namedScoreWeights": {},
+          "cost": 0
+        }
+      }
+    ],
+    "results": [
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "slugify: all unit tests passed",
+              "assertion": {
+                "type": "javascript",
+                "value": "file://./harness.js"
+              }
+            }
+          ]
+        },
+        "id": "113e12d4-1181-430c-b86e-c284d5e60746",
+        "latencyMs": 3781,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Write a JavaScript function slugify(str) that:\n- lowercases\n- replaces any run of spaces or punctuation (anything not a-z, 0-9) with a single hyphen\n- strips leading/trailing hyphens\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.",
+          "label": "{{prompt}}",
+          "config": {
+            "max_tokens": 2500
+          }
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "openrouter:x-ai/grok-4.6",
+          "label": "x-ai/grok-4.6"
+        },
+        "response": {
+          "output": "Thinking: The user wants a JavaScript function slugify(str) that:\n\n\n```javascript\nfunction slugify(str) {\n  return String(str)\n    .toLowerCase()\n    .replace(/[^a-z0-9]+/g, '-')\n    .replace(/^-+|-+$/g, '');\n}\n```",
+          "tokenUsage": {
+            "total": 534,
+            "prompt": 273,
+            "completion": 261,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 207,
+              "cacheReadInputTokens": 128,
+              "cacheCreationInputTokens": 0
+            }
+          },
+          "cached": false,
+          "finishReason": "stop"
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "slugify",
+          "metadata": {
+            "scoring": "scored",
+            "task": "slugify"
+          },
+          "vars": {
+            "task": "slugify",
+            "prompt": "Write a JavaScript function slugify(str) that:\n- lowercases\n- replaces any run of spaces or punctuation (anything not a-z, 0-9) with a single hyphen\n- strips leading/trailing hyphens\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.\n"
+          },
+          "assert": [
+            {
+              "type": "javascript",
+              "value": "file://./harness.js"
+            }
+          ],
+          "options": {
+            "max_tokens": 2500
+          }
+        },
+        "testIdx": 0,
+        "tokenUsage": {
+          "prompt": 273,
+          "completion": 261,
+          "cached": 0,
+          "total": 534,
+          "numRequests": 1,
+          "completionDetails": {
+            "reasoning": 207,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 128,
+            "cacheCreationInputTokens": 0
+          },
+          "assertions": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            }
+          }
+        },
+        "vars": {
+          "task": "slugify",
+          "prompt": "Write a JavaScript function slugify(str) that:\n- lowercases\n- replaces any run of spaces or punctuation (anything not a-z, 0-9) with a single hyphen\n- strips leading/trailing hyphens\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.\n"
+        },
+        "metadata": {
+          "scoring": "scored",
+          "task": "slugify",
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "isPalindrome: all unit tests passed",
+              "assertion": {
+                "type": "javascript",
+                "value": "file://./harness.js"
+              }
+            }
+          ]
+        },
+        "id": "d88373bb-b4f6-4b52-a056-c14165f925c1",
+        "latencyMs": 3120,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Write a JavaScript function isPalindrome(str) that returns true if str is a palindrome\nignoring case, spaces, and punctuation (keep only a-z0-9). Empty string is true.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.",
+          "label": "{{prompt}}",
+          "config": {
+            "max_tokens": 2500
+          }
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "openrouter:x-ai/grok-4.6",
+          "label": "x-ai/grok-4.6"
+        },
+        "response": {
+          "output": "Thinking: The user wants a JavaScript function isPalindrome(str) that returns true if str is a palindrome, ignoring case, spaces, and punctuation (keep only a-z0-9). Empty string is true.\n\n\n```javascript\nfunction isPalindrome(str) {\n  const cleaned = str.toLowerCase().replace(/[^a-z0-9]/g, '');\n  return cleaned === cleaned.split('').reverse().join('');\n}\n```",
+          "tokenUsage": {
+            "total": 466,
+            "prompt": 267,
+            "completion": 199,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 150,
+              "cacheReadInputTokens": 128,
+              "cacheCreationInputTokens": 0
+            }
+          },
+          "cached": false,
+          "finishReason": "stop"
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "isPalindrome",
+          "metadata": {
+            "scoring": "scored",
+            "task": "isPalindrome"
+          },
+          "vars": {
+            "task": "isPalindrome",
+            "prompt": "Write a JavaScript function isPalindrome(str) that returns true if str is a palindrome\nignoring case, spaces, and punctuation (keep only a-z0-9). Empty string is true.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.\n"
+          },
+          "assert": [
+            {
+              "type": "javascript",
+              "value": "file://./harness.js"
+            }
+          ],
+          "options": {
+            "max_tokens": 2500
+          }
+        },
+        "testIdx": 1,
+        "tokenUsage": {
+          "prompt": 267,
+          "completion": 199,
+          "cached": 0,
+          "total": 466,
+          "numRequests": 1,
+          "completionDetails": {
+            "reasoning": 150,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 128,
+            "cacheCreationInputTokens": 0
+          },
+          "assertions": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            }
+          }
+        },
+        "vars": {
+          "task": "isPalindrome",
+          "prompt": "Write a JavaScript function isPalindrome(str) that returns true if str is a palindrome\nignoring case, spaces, and punctuation (keep only a-z0-9). Empty string is true.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.\n"
+        },
+        "metadata": {
+          "scoring": "scored",
+          "task": "isPalindrome",
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "chunk: all unit tests passed",
+              "assertion": {
+                "type": "javascript",
+                "value": "file://./harness.js"
+              }
+            }
+          ]
+        },
+        "id": "8030a4a2-9d6e-42b3-9fb5-6976050ea4ba",
+        "latencyMs": 3567,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Write a JavaScript function chunk(arr, size) that splits arr into arrays of length size.\nThe last chunk may be shorter. If size < 1, return []. Do not mutate arr.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.",
+          "label": "{{prompt}}",
+          "config": {
+            "max_tokens": 2500
+          }
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "openrouter:x-ai/grok-4.6",
+          "label": "x-ai/grok-4.6"
+        },
+        "response": {
+          "output": "Thinking: The user wants a JavaScript function chunk(arr, size) that splits arr into arrays of length size. Last chunk may be shorter. If size < 1, return []. Don't mutate arr.\n\n\n```javascript\nfunction chunk(arr, size) {\n  if (size < 1) return [];\n  const result = [];\n  for (let i = 0; i < arr.length; i += size) {\n    result.push(arr.slice(i, i + size));\n  }\n  return result;\n}\n```",
+          "tokenUsage": {
+            "total": 488,
+            "prompt": 263,
+            "completion": 225,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 156,
+              "cacheReadInputTokens": 128,
+              "cacheCreationInputTokens": 0
+            }
+          },
+          "cached": false,
+          "finishReason": "stop"
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "chunk",
+          "metadata": {
+            "scoring": "scored",
+            "task": "chunk"
+          },
+          "vars": {
+            "task": "chunk",
+            "prompt": "Write a JavaScript function chunk(arr, size) that splits arr into arrays of length size.\nThe last chunk may be shorter. If size < 1, return []. Do not mutate arr.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.\n"
+          },
+          "assert": [
+            {
+              "type": "javascript",
+              "value": "file://./harness.js"
+            }
+          ],
+          "options": {
+            "max_tokens": 2500
+          }
+        },
+        "testIdx": 2,
+        "tokenUsage": {
+          "prompt": 263,
+          "completion": 225,
+          "cached": 0,
+          "total": 488,
+          "numRequests": 1,
+          "completionDetails": {
+            "reasoning": 156,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 128,
+            "cacheCreationInputTokens": 0
+          },
+          "assertions": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            }
+          }
+        },
+        "vars": {
+          "task": "chunk",
+          "prompt": "Write a JavaScript function chunk(arr, size) that splits arr into arrays of length size.\nThe last chunk may be shorter. If size < 1, return []. Do not mutate arr.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.\n"
+        },
+        "metadata": {
+          "scoring": "scored",
+          "task": "chunk",
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "error": "Unexpected token ';'",
+        "gradingResult": {
+          "pass": false,
+          "score": 0,
+          "reason": "Unexpected token ';'",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": false,
+              "score": 0,
+              "reason": "Unexpected token ';'",
+              "assertion": {
+                "type": "javascript",
+                "value": "file://./harness.js"
+              }
+            }
+          ]
+        },
+        "id": "fdd48c81-ff9c-4957-8db2-c8fc00f7ca19",
+        "latencyMs": 9917,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Write a JavaScript function parseQuery(qs) that parses a URL query string into an object of strings.\nIgnore a leading '?'. Duplicate keys: last value wins. decodeURIComponent values.\nEmpty input returns {}. Do not use URLSearchParams if you prefer a small parser — either is fine.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.",
+          "label": "{{prompt}}",
+          "config": {
+            "max_tokens": 2500
+          }
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "openrouter:x-ai/grok-4.6",
+          "label": "x-ai/grok-4.6"
+        },
+        "response": {
+          "output": "Thinking: The user wants a JavaScript function parseQuery(qs) that:\n```javascript\nfunction parseQuery(qs) {\n  if (!qs) return {};\n  if (qs[0] === '?') qs = qs.slice(1);\n  if (!qs) return {};\n  const result = {};\n  for (const part of qs.\n\n```javascript\nfunction parseQuery(qs) {\n  const out = {};\n  if (!qs) return out;\n  const s = qs.charAt(0) === '?' ? qs.slice(1) : qs;\n  if (!s) return out;\n  for (const pair of s.split('&')) {\n    if (!pair) continue;\n    const i = pair.indexOf('=');\n    const k = i === -1 ? pair : pair.slice(0, i);\n    const v = i === -1 ? '' : pair.slice(i + 1);\n    out[decodeURIComponent(k.replace(/\\+/g, ' '))] = decodeURIComponent(v.replace(/\\+/g, ' '));\n  }\n  return out;\n}\n```",
+          "tokenUsage": {
+            "total": 1091,
+            "prompt": 283,
+            "completion": 808,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 648,
+              "cacheReadInputTokens": 128,
+              "cacheCreationInputTokens": 0
+            }
+          },
+          "cached": false,
+          "finishReason": "stop"
+        },
+        "score": 0,
+        "success": false,
+        "testCase": {
+          "description": "parseQuery",
+          "metadata": {
+            "scoring": "scored",
+            "task": "parseQuery"
+          },
+          "vars": {
+            "task": "parseQuery",
+            "prompt": "Write a JavaScript function parseQuery(qs) that parses a URL query string into an object of strings.\nIgnore a leading '?'. Duplicate keys: last value wins. decodeURIComponent values.\nEmpty input returns {}. Do not use URLSearchParams if you prefer a small parser — either is fine.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.\n"
+          },
+          "assert": [
+            {
+              "type": "javascript",
+              "value": "file://./harness.js"
+            }
+          ],
+          "options": {
+            "max_tokens": 2500
+          }
+        },
+        "testIdx": 3,
+        "tokenUsage": {
+          "prompt": 283,
+          "completion": 808,
+          "cached": 0,
+          "total": 1091,
+          "numRequests": 1,
+          "completionDetails": {
+            "reasoning": 648,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 128,
+            "cacheCreationInputTokens": 0
+          },
+          "assertions": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            }
+          }
+        },
+        "vars": {
+          "task": "parseQuery",
+          "prompt": "Write a JavaScript function parseQuery(qs) that parses a URL query string into an object of strings.\nIgnore a leading '?'. Duplicate keys: last value wins. decodeURIComponent values.\nEmpty input returns {}. Do not use URLSearchParams if you prefer a small parser — either is fine.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.\n"
+        },
+        "metadata": {
+          "scoring": "scored",
+          "task": "parseQuery",
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 1
+      },
+      {
+        "cost": 0,
+        "error": "Invalid or unexpected token",
+        "gradingResult": {
+          "pass": false,
+          "score": 0,
+          "reason": "Invalid or unexpected token",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": false,
+              "score": 0,
+              "reason": "Invalid or unexpected token",
+              "assertion": {
+                "type": "javascript",
+                "value": "file://./harness.js"
+              }
+            }
+          ]
+        },
+        "id": "8ca5dcad-6a37-4506-ad35-7a5143a56bab",
+        "latencyMs": 8055,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Write a JavaScript function deepGet(obj, path) where path is a dot-separated string (e.g. \"a.b.0.c\").\nNumeric path segments are array indexes. Missing path returns undefined.\nEmpty path returns obj itself.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.",
+          "label": "{{prompt}}",
+          "config": {
+            "max_tokens": 2500
+          }
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "openrouter:x-ai/grok-4.6",
+          "label": "x-ai/grok-4.6"
+        },
+        "response": {
+          "output": "Thinking: The user wants a JavaScript function deepGet(obj, path) that:\n```javascript\nfunction deepGet(obj, path) {\n  if (path === '' || path == null) return obj;\n  const parts = path.split('.\n\n```javascript\nfunction deepGet(obj, path) {\n  if (path === '') return obj;\n  const parts = String(path).split('.');\n  let cur = obj;\n  for (let i = 0; i < parts.length; i++) {\n    if (cur == null) return undefined;\n    cur = cur[parts[i]];\n  }\n  return cur;\n}\n```",
+          "tokenUsage": {
+            "total": 818,
+            "prompt": 275,
+            "completion": 543,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 459,
+              "cacheReadInputTokens": 128,
+              "cacheCreationInputTokens": 0
+            }
+          },
+          "cached": false,
+          "finishReason": "stop"
+        },
+        "score": 0,
+        "success": false,
+        "testCase": {
+          "description": "deepGet",
+          "metadata": {
+            "scoring": "scored",
+            "task": "deepGet"
+          },
+          "vars": {
+            "task": "deepGet",
+            "prompt": "Write a JavaScript function deepGet(obj, path) where path is a dot-separated string (e.g. \"a.b.0.c\").\nNumeric path segments are array indexes. Missing path returns undefined.\nEmpty path returns obj itself.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.\n"
+          },
+          "assert": [
+            {
+              "type": "javascript",
+              "value": "file://./harness.js"
+            }
+          ],
+          "options": {
+            "max_tokens": 2500
+          }
+        },
+        "testIdx": 4,
+        "tokenUsage": {
+          "prompt": 275,
+          "completion": 543,
+          "cached": 0,
+          "total": 818,
+          "numRequests": 1,
+          "completionDetails": {
+            "reasoning": 459,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 128,
+            "cacheCreationInputTokens": 0
+          },
+          "assertions": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            }
+          }
+        },
+        "vars": {
+          "task": "deepGet",
+          "prompt": "Write a JavaScript function deepGet(obj, path) where path is a dot-separated string (e.g. \"a.b.0.c\").\nNumeric path segments are array indexes. Missing path returns undefined.\nEmpty path returns obj itself.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.\n"
+        },
+        "metadata": {
+          "scoring": "scored",
+          "task": "deepGet",
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 1
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "uniquePreserve: all unit tests passed",
+              "assertion": {
+                "type": "javascript",
+                "value": "file://./harness.js"
+              }
+            }
+          ]
+        },
+        "id": "f4c5fd11-0f53-4660-b41d-07374c288f46",
+        "latencyMs": 4872,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Write a JavaScript function uniquePreserve(arr) that returns a new array of unique primitive values,\nkeeping the first occurrence (case-sensitive). Do not mutate arr.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.",
+          "label": "{{prompt}}",
+          "config": {
+            "max_tokens": 2500
+          }
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "openrouter:x-ai/grok-4.6",
+          "label": "x-ai/grok-4.6"
+        },
+        "response": {
+          "output": "Thinking: The user wants a JavaScript function uniquePreserve(arr) that returns a new array of unique primitive values, keeping the first occurrence (case-sensitive). Do not mutate arr.\n\n\n```javascript\nfunction uniquePreserve(arr) {\n  const seen = new Set();\n  const result = [];\n  for (const item of arr) {\n    if (!seen.has(item)) {\n      seen.add(item);\n      result.push(item);\n    }\n  }\n  return result;\n}\n```",
+          "tokenUsage": {
+            "total": 591,
+            "prompt": 257,
+            "completion": 334,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 270,
+              "cacheReadInputTokens": 128,
+              "cacheCreationInputTokens": 0
+            }
+          },
+          "cached": false,
+          "finishReason": "stop"
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "uniquePreserve",
+          "metadata": {
+            "scoring": "scored",
+            "task": "uniquePreserve"
+          },
+          "vars": {
+            "task": "uniquePreserve",
+            "prompt": "Write a JavaScript function uniquePreserve(arr) that returns a new array of unique primitive values,\nkeeping the first occurrence (case-sensitive). Do not mutate arr.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.\n"
+          },
+          "assert": [
+            {
+              "type": "javascript",
+              "value": "file://./harness.js"
+            }
+          ],
+          "options": {
+            "max_tokens": 2500
+          }
+        },
+        "testIdx": 5,
+        "tokenUsage": {
+          "prompt": 257,
+          "completion": 334,
+          "cached": 0,
+          "total": 591,
+          "numRequests": 1,
+          "completionDetails": {
+            "reasoning": 270,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 128,
+            "cacheCreationInputTokens": 0
+          },
+          "assertions": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            }
+          }
+        },
+        "vars": {
+          "task": "uniquePreserve",
+          "prompt": "Write a JavaScript function uniquePreserve(arr) that returns a new array of unique primitive values,\nkeeping the first occurrence (case-sensitive). Do not mutate arr.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.\n"
+        },
+        "metadata": {
+          "scoring": "scored",
+          "task": "uniquePreserve",
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "formatBytes: all unit tests passed",
+              "assertion": {
+                "type": "javascript",
+                "value": "file://./harness.js"
+              }
+            }
+          ]
+        },
+        "id": "e013ac2f-f64d-4305-8150-529a7bce3ac6",
+        "latencyMs": 12786,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Write a JavaScript function formatBytes(n) for n >= 0:\n- 0 => \"0 B\"\n- 1024 => \"1 KB\"\n- 1536 => \"1.5 KB\"\n- 1048576 => \"1 MB\"\nUse 1024-based units B, KB, MB, GB. If the value is an integer after converting, omit decimals (1 KB not 1.0 KB).\nOtherwise one decimal place. Space before the unit.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.",
+          "label": "{{prompt}}",
+          "config": {
+            "max_tokens": 2500
+          }
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "openrouter:x-ai/grok-4.6",
+          "label": "x-ai/grok-4.6"
+        },
+        "response": {
+          "output": "Thinking: The user wants a JavaScript function formatBytes(n) that formats bytes into human-readable format.\n\n\n```javascript\nfunction formatBytes(n) {\n  const units = ['B', 'KB', 'MB', 'GB'];\n  let i = 0;\n  while (n >= 1024 && i < units.length - 1) {\n    n /= 1024;\n    i++;\n  }\n  const s = Number.isInteger(n) ? String(n) : n.toFixed(1);\n  return s + ' ' + units[i];\n}\n```",
+          "tokenUsage": {
+            "total": 1211,
+            "prompt": 324,
+            "completion": 887,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 786,
+              "cacheReadInputTokens": 128,
+              "cacheCreationInputTokens": 0
+            }
+          },
+          "cached": false,
+          "finishReason": "stop"
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "formatBytes",
+          "metadata": {
+            "scoring": "scored",
+            "task": "formatBytes"
+          },
+          "vars": {
+            "task": "formatBytes",
+            "prompt": "Write a JavaScript function formatBytes(n) for n >= 0:\n- 0 => \"0 B\"\n- 1024 => \"1 KB\"\n- 1536 => \"1.5 KB\"\n- 1048576 => \"1 MB\"\nUse 1024-based units B, KB, MB, GB. If the value is an integer after converting, omit decimals (1 KB not 1.0 KB).\nOtherwise one decimal place. Space before the unit.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.\n"
+          },
+          "assert": [
+            {
+              "type": "javascript",
+              "value": "file://./harness.js"
+            }
+          ],
+          "options": {
+            "max_tokens": 2500
+          }
+        },
+        "testIdx": 6,
+        "tokenUsage": {
+          "prompt": 324,
+          "completion": 887,
+          "cached": 0,
+          "total": 1211,
+          "numRequests": 1,
+          "completionDetails": {
+            "reasoning": 786,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 128,
+            "cacheCreationInputTokens": 0
+          },
+          "assertions": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            }
+          }
+        },
+        "vars": {
+          "task": "formatBytes",
+          "prompt": "Write a JavaScript function formatBytes(n) for n >= 0:\n- 0 => \"0 B\"\n- 1024 => \"1 KB\"\n- 1536 => \"1.5 KB\"\n- 1048576 => \"1 MB\"\nUse 1024-based units B, KB, MB, GB. If the value is an integer after converting, omit decimals (1 KB not 1.0 KB).\nOtherwise one decimal place. Space before the unit.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.\n"
+        },
+        "metadata": {
+          "scoring": "scored",
+          "task": "formatBytes",
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "rangeSum: all unit tests passed",
+              "assertion": {
+                "type": "javascript",
+                "value": "file://./harness.js"
+              }
+            }
+          ]
+        },
+        "id": "feea997c-bee3-4903-810f-75f129dc3ecf",
+        "latencyMs": 5712,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Write a JavaScript function rangeSum(a, b) that returns the sum of all integers from a to b inclusive.\na and b may be in either order and may be negative.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.",
+          "label": "{{prompt}}",
+          "config": {
+            "max_tokens": 2500
+          }
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "openrouter:x-ai/grok-4.6",
+          "label": "x-ai/grok-4.6"
+        },
+        "response": {
+          "output": "Thinking: The user wants a JavaScript function rangeSum(a, b) that returns the sum of all integers from a to b inclusive. a and b may be in either order and may be negative.\n\n\n```javascript\nfunction rangeSum(a, b) {\n  const lo = Math.min(a, b);\n  const hi = Math.max(a, b);\n  const n = hi - lo + 1;\n  return n * (lo + hi) / 2;\n}\n```",
+          "tokenUsage": {
+            "total": 673,
+            "prompt": 261,
+            "completion": 412,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 352,
+              "cacheReadInputTokens": 128,
+              "cacheCreationInputTokens": 0
+            }
+          },
+          "cached": false,
+          "finishReason": "stop"
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "rangeSum",
+          "metadata": {
+            "scoring": "scored",
+            "task": "rangeSum"
+          },
+          "vars": {
+            "task": "rangeSum",
+            "prompt": "Write a JavaScript function rangeSum(a, b) that returns the sum of all integers from a to b inclusive.\na and b may be in either order and may be negative.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.\n"
+          },
+          "assert": [
+            {
+              "type": "javascript",
+              "value": "file://./harness.js"
+            }
+          ],
+          "options": {
+            "max_tokens": 2500
+          }
+        },
+        "testIdx": 7,
+        "tokenUsage": {
+          "prompt": 261,
+          "completion": 412,
+          "cached": 0,
+          "total": 673,
+          "numRequests": 1,
+          "completionDetails": {
+            "reasoning": 352,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 128,
+            "cacheCreationInputTokens": 0
+          },
+          "assertions": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            }
+          }
+        },
+        "vars": {
+          "task": "rangeSum",
+          "prompt": "Write a JavaScript function rangeSum(a, b) that returns the sum of all integers from a to b inclusive.\na and b may be in either order and may be negative.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.\n"
+        },
+        "metadata": {
+          "scoring": "scored",
+          "task": "rangeSum",
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "error": "Unexpected token ';'",
+        "gradingResult": {
+          "pass": false,
+          "score": 0,
+          "reason": "Unexpected token ';'",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": false,
+              "score": 0,
+              "reason": "Unexpected token ';'",
+              "assertion": {
+                "type": "javascript",
+                "value": "file://./harness.js"
+              }
+            }
+          ]
+        },
+        "id": "082f2eff-8fcf-4d04-86a6-7f88d799cd7b",
+        "latencyMs": 6422,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Write a JavaScript function titleCase(str) that capitalizes the first letter of each word and lowercases the rest.\nCollapse any whitespace to a single space and trim. Empty => \"\".\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.",
+          "label": "{{prompt}}",
+          "config": {
+            "max_tokens": 2500
+          }
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "openrouter:x-ai/grok-4.6",
+          "label": "x-ai/grok-4.6"
+        },
+        "response": {
+          "output": "Thinking: The user wants a JavaScript function titleCase(str) that:\n```javascript\nfunction titleCase(str) {\n  if (!str) return \"\";\n  return str\n    .\n\n```javascript\nfunction titleCase(str) {\n  if (!str) return \"\";\n  return str.trim().replace(/\\s+/g, \" \").split(\" \").map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(\" \");\n}\n```",
+          "tokenUsage": {
+            "total": 742,
+            "prompt": 262,
+            "completion": 480,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 415,
+              "cacheReadInputTokens": 128,
+              "cacheCreationInputTokens": 0
+            }
+          },
+          "cached": false,
+          "finishReason": "stop"
+        },
+        "score": 0,
+        "success": false,
+        "testCase": {
+          "description": "titleCase",
+          "metadata": {
+            "scoring": "scored",
+            "task": "titleCase"
+          },
+          "vars": {
+            "task": "titleCase",
+            "prompt": "Write a JavaScript function titleCase(str) that capitalizes the first letter of each word and lowercases the rest.\nCollapse any whitespace to a single space and trim. Empty => \"\".\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.\n"
+          },
+          "assert": [
+            {
+              "type": "javascript",
+              "value": "file://./harness.js"
+            }
+          ],
+          "options": {
+            "max_tokens": 2500
+          }
+        },
+        "testIdx": 8,
+        "tokenUsage": {
+          "prompt": 262,
+          "completion": 480,
+          "cached": 0,
+          "total": 742,
+          "numRequests": 1,
+          "completionDetails": {
+            "reasoning": 415,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 128,
+            "cacheCreationInputTokens": 0
+          },
+          "assertions": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            }
+          }
+        },
+        "vars": {
+          "task": "titleCase",
+          "prompt": "Write a JavaScript function titleCase(str) that capitalizes the first letter of each word and lowercases the rest.\nCollapse any whitespace to a single space and trim. Empty => \"\".\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.\n"
+        },
+        "metadata": {
+          "scoring": "scored",
+          "task": "titleCase",
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 1
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "isAnagram: all unit tests passed",
+              "assertion": {
+                "type": "javascript",
+                "value": "file://./harness.js"
+              }
+            }
+          ]
+        },
+        "id": "77993390-0dc3-4dd5-9521-1363ffa58b07",
+        "latencyMs": 4817,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Write a JavaScript function isAnagram(a, b) that returns true if a and b are anagrams,\nignoring case and spaces (keep letters and digits only). Two empty strings are true.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.",
+          "label": "{{prompt}}",
+          "config": {
+            "max_tokens": 2500
+          }
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "openrouter:x-ai/grok-4.6",
+          "label": "x-ai/grok-4.6"
+        },
+        "response": {
+          "output": "Thinking: The user wants a JavaScript function isAnagram(a, b) that returns true if a and b are anagrams, ignoring case and spaces (keep letters and digits only). Two empty strings are true.\n\n\n```javascript\nfunction isAnagram(a, b) {\n  const normalize = (s) => String(s).toLowerCase().replace(/[^a-z0-9]/g, '').split('').sort().join('');\n  return normalize(a) === normalize(b);\n}\n```",
+          "tokenUsage": {
+            "total": 565,
+            "prompt": 266,
+            "completion": 299,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 236,
+              "cacheReadInputTokens": 128,
+              "cacheCreationInputTokens": 0
+            }
+          },
+          "cached": false,
+          "finishReason": "stop"
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "isAnagram",
+          "metadata": {
+            "scoring": "scored",
+            "task": "isAnagram"
+          },
+          "vars": {
+            "task": "isAnagram",
+            "prompt": "Write a JavaScript function isAnagram(a, b) that returns true if a and b are anagrams,\nignoring case and spaces (keep letters and digits only). Two empty strings are true.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.\n"
+          },
+          "assert": [
+            {
+              "type": "javascript",
+              "value": "file://./harness.js"
+            }
+          ],
+          "options": {
+            "max_tokens": 2500
+          }
+        },
+        "testIdx": 9,
+        "tokenUsage": {
+          "prompt": 266,
+          "completion": 299,
+          "cached": 0,
+          "total": 565,
+          "numRequests": 1,
+          "completionDetails": {
+            "reasoning": 236,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 128,
+            "cacheCreationInputTokens": 0
+          },
+          "assertions": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            }
+          }
+        },
+        "vars": {
+          "task": "isAnagram",
+          "prompt": "Write a JavaScript function isAnagram(a, b) that returns true if a and b are anagrams,\nignoring case and spaces (keep letters and digits only). Two empty strings are true.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.\n"
+        },
+        "metadata": {
+          "scoring": "scored",
+          "task": "isAnagram",
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "fibonacci: all unit tests passed",
+              "assertion": {
+                "type": "javascript",
+                "value": "file://./harness.js"
+              }
+            }
+          ]
+        },
+        "id": "0005f72e-ae56-4aa6-acba-a04b2bfdf6ab",
+        "latencyMs": 4767,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Write a JavaScript function fibonacci(n) for the n-th Fibonacci number (0-indexed: 0, 1, 1, 2, 3, 5, ...).\nIf n is negative, return null. n is an integer.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.",
+          "label": "{{prompt}}",
+          "config": {
+            "max_tokens": 2500
+          }
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "openrouter:x-ai/grok-4.6",
+          "label": "x-ai/grok-4.6"
+        },
+        "response": {
+          "output": "Thinking: The user wants a JavaScript function fibonacci(n) for the n-th Fibonacci number, 0-indexed: 0, 1, 1, 2, 3, 5, ...\n\n\n```javascript\nfunction fibonacci(n) {\n  if (n < 0) return null;\n  if (n === 0) return 0;\n  if (n === 1) return 1;\n  let a = 0, b = 1;\n  for (let i = 2; i <= n; i++) {\n    const next = a + b;\n    a = b;\n    b = next;\n  }\n  return b;\n}\n```",
+          "tokenUsage": {
+            "total": 624,
+            "prompt": 279,
+            "completion": 345,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 246,
+              "cacheReadInputTokens": 128,
+              "cacheCreationInputTokens": 0
+            }
+          },
+          "cached": false,
+          "finishReason": "stop"
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "fibonacci",
+          "metadata": {
+            "scoring": "scored",
+            "task": "fibonacci"
+          },
+          "vars": {
+            "task": "fibonacci",
+            "prompt": "Write a JavaScript function fibonacci(n) for the n-th Fibonacci number (0-indexed: 0, 1, 1, 2, 3, 5, ...).\nIf n is negative, return null. n is an integer.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.\n"
+          },
+          "assert": [
+            {
+              "type": "javascript",
+              "value": "file://./harness.js"
+            }
+          ],
+          "options": {
+            "max_tokens": 2500
+          }
+        },
+        "testIdx": 10,
+        "tokenUsage": {
+          "prompt": 279,
+          "completion": 345,
+          "cached": 0,
+          "total": 624,
+          "numRequests": 1,
+          "completionDetails": {
+            "reasoning": 246,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 128,
+            "cacheCreationInputTokens": 0
+          },
+          "assertions": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            }
+          }
+        },
+        "vars": {
+          "task": "fibonacci",
+          "prompt": "Write a JavaScript function fibonacci(n) for the n-th Fibonacci number (0-indexed: 0, 1, 1, 2, 3, 5, ...).\nIf n is negative, return null. n is an integer.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.\n"
+        },
+        "metadata": {
+          "scoring": "scored",
+          "task": "fibonacci",
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      },
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {},
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "groupBy: all unit tests passed",
+              "assertion": {
+                "type": "javascript",
+                "value": "file://./harness.js"
+              }
+            }
+          ]
+        },
+        "id": "93b5a0d7-af10-4e92-a21f-ad801f48e27c",
+        "latencyMs": 2984,
+        "namedScores": {},
+        "prompt": {
+          "raw": "Write a JavaScript function groupBy(arr, key) that groups an array of objects by obj[key].\nReturn an object whose values are arrays of the original objects, in original order.\nEmpty arr => {}. Do not mutate arr.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.",
+          "label": "{{prompt}}",
+          "config": {
+            "max_tokens": 2500
+          }
+        },
+        "promptId": "effa18501e44aafd9bc42a2f64ffc9b6350f94025520ca2ed382f9bdc4b6e982",
+        "promptIdx": 0,
+        "provider": {
+          "id": "openrouter:x-ai/grok-4.6",
+          "label": "x-ai/grok-4.6"
+        },
+        "response": {
+          "output": "Thinking: The user wants a JavaScript function groupBy(arr, key) that groups an array of objects by obj[key]. Return an object whose values are arrays of the original objects, in original order. Empty arr => {}...\n\n```javascript\nfunction groupBy(arr, key) {\n  const result = {};\n  for (const obj of arr) {\n    const k = obj[key];\n    if (!Object.prototype.hasOwnProperty.call(result, k)) {\n      result[k] = [];\n    }\n    result[k].push(obj);\n  }\n  return result;\n}\n```",
+          "tokenUsage": {
+            "total": 434,
+            "prompt": 272,
+            "completion": 162,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 84,
+              "cacheReadInputTokens": 128,
+              "cacheCreationInputTokens": 0
+            }
+          },
+          "cached": false,
+          "finishReason": "stop"
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "description": "groupBy",
+          "metadata": {
+            "scoring": "scored",
+            "task": "groupBy"
+          },
+          "vars": {
+            "task": "groupBy",
+            "prompt": "Write a JavaScript function groupBy(arr, key) that groups an array of objects by obj[key].\nReturn an object whose values are arrays of the original objects, in original order.\nEmpty arr => {}. Do not mutate arr.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.\n"
+          },
+          "assert": [
+            {
+              "type": "javascript",
+              "value": "file://./harness.js"
+            }
+          ],
+          "options": {
+            "max_tokens": 2500
+          }
+        },
+        "testIdx": 11,
+        "tokenUsage": {
+          "prompt": 272,
+          "completion": 162,
+          "cached": 0,
+          "total": 434,
+          "numRequests": 1,
+          "completionDetails": {
+            "reasoning": 84,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 128,
+            "cacheCreationInputTokens": 0
+          },
+          "assertions": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0,
+              "cacheReadInputTokens": 0,
+              "cacheCreationInputTokens": 0
+            }
+          }
+        },
+        "vars": {
+          "task": "groupBy",
+          "prompt": "Write a JavaScript function groupBy(arr, key) that groups an array of objects by obj[key].\nReturn an object whose values are arrays of the original objects, in original order.\nEmpty arr => {}. Do not mutate arr.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.\n"
+        },
+        "metadata": {
+          "scoring": "scored",
+          "task": "groupBy",
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      }
+    ],
+    "stats": {
+      "successes": 9,
+      "failures": 3,
+      "errors": 0,
+      "tokenUsage": {
+        "prompt": 3282,
+        "completion": 4955,
+        "cached": 0,
+        "total": 8237,
+        "numRequests": 12,
+        "completionDetails": {
+          "reasoning": 4009,
+          "acceptedPrediction": 0,
+          "rejectedPrediction": 0,
+          "cacheReadInputTokens": 1536,
+          "cacheCreationInputTokens": 0
+        },
+        "assertions": {
+          "total": 0,
+          "prompt": 0,
+          "completion": 0,
+          "cached": 0,
+          "numRequests": 0,
+          "completionDetails": {
+            "reasoning": 0,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0,
+            "cacheReadInputTokens": 0,
+            "cacheCreationInputTokens": 0
+          }
+        }
+      },
+      "durationMs": 19245,
+      "evaluationDurationMs": 19245
+    }
+  },
+  "config": {
+    "tags": {},
+    "description": "VCL VibeBench — Score (1.2)",
+    "prompts": [
+      "{{prompt}}"
+    ],
+    "providers": [
+      {
+        "id": "openrouter:x-ai/grok-4.6",
+        "label": "x-ai/grok-4.6",
+        "config": {
+          "max_tokens": 2500,
+          "temperature": 0
+        }
+      }
+    ],
+    "tests": [
+      {
+        "description": "slugify",
+        "metadata": {
+          "scoring": "scored",
+          "task": "slugify"
+        },
+        "vars": {
+          "task": "slugify",
+          "prompt": "Write a JavaScript function slugify(str) that:\n- lowercases\n- replaces any run of spaces or punctuation (anything not a-z, 0-9) with a single hyphen\n- strips leading/trailing hyphens\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.\n"
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "value": "file://./harness.js"
+          }
+        ]
+      },
+      {
+        "description": "isPalindrome",
+        "metadata": {
+          "scoring": "scored",
+          "task": "isPalindrome"
+        },
+        "vars": {
+          "task": "isPalindrome",
+          "prompt": "Write a JavaScript function isPalindrome(str) that returns true if str is a palindrome\nignoring case, spaces, and punctuation (keep only a-z0-9). Empty string is true.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.\n"
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "value": "file://./harness.js"
+          }
+        ]
+      },
+      {
+        "description": "chunk",
+        "metadata": {
+          "scoring": "scored",
+          "task": "chunk"
+        },
+        "vars": {
+          "task": "chunk",
+          "prompt": "Write a JavaScript function chunk(arr, size) that splits arr into arrays of length size.\nThe last chunk may be shorter. If size < 1, return []. Do not mutate arr.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.\n"
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "value": "file://./harness.js"
+          }
+        ]
+      },
+      {
+        "description": "parseQuery",
+        "metadata": {
+          "scoring": "scored",
+          "task": "parseQuery"
+        },
+        "vars": {
+          "task": "parseQuery",
+          "prompt": "Write a JavaScript function parseQuery(qs) that parses a URL query string into an object of strings.\nIgnore a leading '?'. Duplicate keys: last value wins. decodeURIComponent values.\nEmpty input returns {}. Do not use URLSearchParams if you prefer a small parser — either is fine.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.\n"
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "value": "file://./harness.js"
+          }
+        ]
+      },
+      {
+        "description": "deepGet",
+        "metadata": {
+          "scoring": "scored",
+          "task": "deepGet"
+        },
+        "vars": {
+          "task": "deepGet",
+          "prompt": "Write a JavaScript function deepGet(obj, path) where path is a dot-separated string (e.g. \"a.b.0.c\").\nNumeric path segments are array indexes. Missing path returns undefined.\nEmpty path returns obj itself.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.\n"
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "value": "file://./harness.js"
+          }
+        ]
+      },
+      {
+        "description": "uniquePreserve",
+        "metadata": {
+          "scoring": "scored",
+          "task": "uniquePreserve"
+        },
+        "vars": {
+          "task": "uniquePreserve",
+          "prompt": "Write a JavaScript function uniquePreserve(arr) that returns a new array of unique primitive values,\nkeeping the first occurrence (case-sensitive). Do not mutate arr.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.\n"
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "value": "file://./harness.js"
+          }
+        ]
+      },
+      {
+        "description": "formatBytes",
+        "metadata": {
+          "scoring": "scored",
+          "task": "formatBytes"
+        },
+        "vars": {
+          "task": "formatBytes",
+          "prompt": "Write a JavaScript function formatBytes(n) for n >= 0:\n- 0 => \"0 B\"\n- 1024 => \"1 KB\"\n- 1536 => \"1.5 KB\"\n- 1048576 => \"1 MB\"\nUse 1024-based units B, KB, MB, GB. If the value is an integer after converting, omit decimals (1 KB not 1.0 KB).\nOtherwise one decimal place. Space before the unit.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.\n"
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "value": "file://./harness.js"
+          }
+        ]
+      },
+      {
+        "description": "rangeSum",
+        "metadata": {
+          "scoring": "scored",
+          "task": "rangeSum"
+        },
+        "vars": {
+          "task": "rangeSum",
+          "prompt": "Write a JavaScript function rangeSum(a, b) that returns the sum of all integers from a to b inclusive.\na and b may be in either order and may be negative.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.\n"
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "value": "file://./harness.js"
+          }
+        ]
+      },
+      {
+        "description": "titleCase",
+        "metadata": {
+          "scoring": "scored",
+          "task": "titleCase"
+        },
+        "vars": {
+          "task": "titleCase",
+          "prompt": "Write a JavaScript function titleCase(str) that capitalizes the first letter of each word and lowercases the rest.\nCollapse any whitespace to a single space and trim. Empty => \"\".\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.\n"
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "value": "file://./harness.js"
+          }
+        ]
+      },
+      {
+        "description": "isAnagram",
+        "metadata": {
+          "scoring": "scored",
+          "task": "isAnagram"
+        },
+        "vars": {
+          "task": "isAnagram",
+          "prompt": "Write a JavaScript function isAnagram(a, b) that returns true if a and b are anagrams,\nignoring case and spaces (keep letters and digits only). Two empty strings are true.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.\n"
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "value": "file://./harness.js"
+          }
+        ]
+      },
+      {
+        "description": "fibonacci",
+        "metadata": {
+          "scoring": "scored",
+          "task": "fibonacci"
+        },
+        "vars": {
+          "task": "fibonacci",
+          "prompt": "Write a JavaScript function fibonacci(n) for the n-th Fibonacci number (0-indexed: 0, 1, 1, 2, 3, 5, ...).\nIf n is negative, return null. n is an integer.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.\n"
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "value": "file://./harness.js"
+          }
+        ]
+      },
+      {
+        "description": "groupBy",
+        "metadata": {
+          "scoring": "scored",
+          "task": "groupBy"
+        },
+        "vars": {
+          "task": "groupBy",
+          "prompt": "Write a JavaScript function groupBy(arr, key) that groups an array of objects by obj[key].\nReturn an object whose values are arrays of the original objects, in original order.\nEmpty arr => {}. Do not mutate arr.\nReturn ONLY a markdown javascript code fence with the function. No tests, no explanation.\n"
+        },
+        "assert": [
+          {
+            "type": "javascript",
+            "value": "file://./harness.js"
+          }
+        ]
+      }
+    ],
+    "env": {},
+    "defaultTest": {
+      "options": {
+        "max_tokens": 2500
+      },
+      "vars": {},
+      "assert": [],
+      "metadata": {}
+    },
+    "outputPath": [
+      "results/score-2026-08-13.json"
+    ],
+    "extensions": [],
+    "metadata": {},
+    "evaluateOptions": {}
+  },
+  "shareableUrl": null,
+  "metadata": {
+    "promptfooVersion": "0.121.19",
+    "nodeVersion": "v24.15.0",
+    "platform": "darwin",
+    "arch": "x64",
+    "exportedAt": "2026-08-13T14:01:37.775Z",
+    "evaluationCreatedAt": "2026-08-13T14:01:16.118Z"
+  },
+  "vars": [
+    "task",
+    "prompt"
+  ],
+  "runtimeOptions": {
+    "eventSource": "cli",
+    "showProgressBar": true,
+    "repeat": 1,
+    "maxConcurrency": 4,
+    "cache": true
+  }
+}

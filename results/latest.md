@@ -1,6 +1,6 @@
 # Latest VCL VibeBench results
 
-_Generated 2026-07-28_
+_Generated 2026-08-13_
 
 ### dev — 2026-07-28
 
@@ -71,3 +71,22 @@ Files: `dev-2026-07-28.json` + `dev-2026-07-28.meta.json`
 _No blended “best model” score. Exploratory rows are for side-by-side judgment only. See [methodology](../docs/methodology.md)._
 
 Files: `fun-2026-07-28.json` + `fun-2026-07-28.meta.json`
+
+### score — 2026-08-13
+
+- VCL VibeBench: 1.0.0
+- promptfoo: 0.121.19
+- Runner: local
+- Label: maintainer
+- Models: x-ai/grok-4.6
+- Notes: First Score (1.2) maintainer run. OpenRouter x-ai/grok-4.6 (Cursor Grok 4.6 same weights). 9/12 unit tests passed. Fail: parseQuery, deepGet, titleCase. promptfoo eval-5F6-2026-08-13T14:01:16.
+
+#### Scored prompts (deterministic asserts)
+
+| Model | Pass | Fail | Scored total |
+|---|---:|---:|---:|
+| x-ai/grok-4.6 | 9 | 3 | 12 |
+
+_All tasks in this suite are scored (unit-test pass/fail). No blended “best model” across Fun/Dev/Score. See [methodology](../docs/methodology.md)._
+
+Files: `score-2026-08-13.json` + `score-2026-08-13.meta.json`
