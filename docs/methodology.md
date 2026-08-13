@@ -22,7 +22,7 @@ Each test is tagged `metadata.scoring: scored | exploratory`.
 - **Scored:** deterministic `contains` / `regex` asserts. Exact-answer Fun prompts use `regex` so “answer with just the number” is enforced, not only correctness. These feed accuracy summaries.
 - **Exploratory:** no assert; compare qualitatively in the promptfoo UI (or by eye in a chat app). **No numeric “winner.”**
 
-There is **no LLM judge**. Fun, Dev, and (when it ships) Score stay on deterministic asserts. There is **no blended “best model” score** across suites.
+There is **no LLM judge**. Fun, Dev, and Score stay on deterministic asserts. There is **no blended “best model” score** across suites.
 
 ## Run parameters
 
@@ -72,9 +72,30 @@ Do **not** wrap third-party mega-benches (SWE-bench, Terminal-Bench, Artificial 
 
 ## Score (1.2)
 
-Twelve original JavaScript tasks in [`tests/score/`](../tests/score/). The model returns a function in a code fence; [`tests/score/harness.js`](../tests/score/harness.js) runs unit tests in a vm (timeout, no filesystem). Pass/fail only — no LLM judge, not blended with Fun/Dev.
+Twelve original JavaScript tasks in [`tests/score/`](../tests/score/). Protocol is Aider-lite (write code, tests grade). Fixtures are **original VCL** — we do not clone Aider polyglot or Exercism at runtime.
+
+### What a Score number means
+
+Score is **not** a general intelligence rating. `9/12` means nine everyday helpers compiled and passed hidden examples, and three did not — not “the model is 75% as capable.”
+
+For each task:
+
+1. The prompt asks for **one named function** in a markdown fence (no tests, no essay).
+2. [`tests/score/harness.js`](../tests/score/harness.js) extracts code and runs it in a `vm` sandbox (timeout, no filesystem).
+3. A few **hidden unit tests** must match exactly (`pass` / `fail` only).
+
+There is **no LLM judge**. Score is **not** blended with Fun or Dev.
+
+| If the log says… | It actually means… |
+|---|---|
+| `all unit tests passed` | Extracted function ran; every hidden example matched. |
+| `expected X, got Y` | Function ran, but a return value was wrong. |
+| `Unexpected token` / `Invalid or unexpected token` | The extracted snippet **did not compile**. Unit tests never ran. Common with thinking models that open a fence, abort mid-line, then emit a finished function in a second fence. |
+
+The harness prefers the **last syntactically valid** `function name() { … }` in the reply so a finished second fence can still pass. The 2026-08-13 Grok 4.6 JSON was graded with an earlier extractor that compiled the truncated thinking draft — that is why `parseQuery`, `deepGet`, and `titleCase` show as fail in that file even though the finished functions look correct.
+
+OpenRouter `x-ai/grok-4.6` is the same weights as **Cursor Grok 4.6**. A Score run on that ID is a Score run on Cursor Grok 4.6. Fun/Dev maintainer tables may still be an older Grok (check `results/latest.md`).
 
 - Smoke: first two tasks (`slugify`, `isPalindrome`)
 - Cost intent: smoke = cents; full suite ≤ about **$2 per model**
 - Same BYOK as Fun/Dev (OpenRouter default, `PROVIDER=hetzner` optional)
-- Protocol is Aider-lite (code + tests). Fixtures are **original VCL** — we do not clone Aider polyglot or Exercism at runtime.

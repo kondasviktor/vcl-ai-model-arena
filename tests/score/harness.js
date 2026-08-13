@@ -6,12 +6,72 @@
 
 const vm = require('vm');
 
+function parsesAsScript(code) {
+  try {
+    new vm.Script(code, { filename: 'score-candidate.js' });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/** Brace-balanced `function name(...) { ... }` blocks (ignores truncated thinking drafts). */
+function namedFunctionBlocks(text) {
+  const blocks = [];
+  const re = /\b(?:async\s+)?function\s+[A-Za-z_$][\w$]*\s*\(/g;
+  let m;
+  while ((m = re.exec(text))) {
+    const start = m.index;
+    const brace = text.indexOf('{', start);
+    if (brace < 0) continue;
+    let depth = 0;
+    let inStr = null;
+    let escape = false;
+    for (let i = brace; i < text.length; i++) {
+      const c = text[i];
+      if (inStr) {
+        if (escape) {
+          escape = false;
+          continue;
+        }
+        if (c === '\\') {
+          escape = true;
+          continue;
+        }
+        if (c === inStr) inStr = null;
+        continue;
+      }
+      if (c === '"' || c === "'" || c === '`') {
+        inStr = c;
+        continue;
+      }
+      if (c === '{') depth += 1;
+      else if (c === '}') {
+        depth -= 1;
+        if (depth === 0) {
+          blocks.push(text.slice(start, i + 1).trim());
+          break;
+        }
+      }
+    }
+  }
+  return blocks;
+}
+
 function extractCode(output) {
   const text = String(output || '');
-  const fences = [...text.matchAll(/```(?:javascript|js|python|py)?\s*\n([\s\S]*?)```/gi)];
-  if (fences.length) {
-    return fences[fences.length - 1][1].trim();
+  const candidates = [];
+  for (const m of text.matchAll(/```(?:javascript|js|python|py)?\s*\n([\s\S]*?)```/gi)) {
+    const body = m[1].trim();
+    if (body) candidates.push(body);
   }
+  for (const block of namedFunctionBlocks(text)) {
+    candidates.push(block);
+  }
+  for (let i = candidates.length - 1; i >= 0; i--) {
+    if (parsesAsScript(candidates[i])) return candidates[i];
+  }
+  if (candidates.length) return candidates[candidates.length - 1];
   const start = text.search(/\b(?:async\s+)?function\b|\b(?:const|let|var)\s+[A-Za-z_$][\w$]*\s*=/);
   if (start >= 0) return text.slice(start).trim();
   return text.trim();
@@ -20,6 +80,7 @@ function extractCode(output) {
 const TASKS = {
   slugify: {
     name: 'slugify',
+    checks: 'URL slug from a string (lowercase, hyphens, strip junk)',
     run(fn) {
       expectEq(fn('Hello World'), 'hello-world', 'Hello World');
       expectEq(fn('Hello  World!!'), 'hello-world', 'punctuation/spaces');
@@ -30,6 +91,7 @@ const TASKS = {
   },
   isPalindrome: {
     name: 'isPalindrome',
+    checks: 'Palindrome after ignoring case, spaces, punctuation',
     run(fn) {
       expectEq(fn('A man a plan a canal Panama'), true, 'classic');
       expectEq(fn('race a car'), false, 'not palindrome');
@@ -39,6 +101,7 @@ const TASKS = {
   },
   chunk: {
     name: 'chunk',
+    checks: 'Split an array into groups of size N',
     run(fn) {
       expectDeep(fn([1, 2, 3, 4, 5], 2), [[1, 2], [3, 4], [5]], 'uneven');
       expectDeep(fn([], 3), [], 'empty arr');
@@ -48,6 +111,7 @@ const TASKS = {
   },
   parseQuery: {
     name: 'parseQuery',
+    checks: 'URL query string → `{ key: value }` object',
     run(fn) {
       expectDeep(fn('a=1&b=2'), { a: '1', b: '2' }, 'basic');
       expectDeep(fn('?a=1&a=2'), { a: '2' }, 'last wins + leading ?');
@@ -57,6 +121,7 @@ const TASKS = {
   },
   deepGet: {
     name: 'deepGet',
+    checks: 'Read `a.b.0.c` from a nested object/array',
     run(fn) {
       const obj = { a: { b: 1 }, items: [{ n: 9 }] };
       expectEq(fn(obj, 'a.b'), 1, 'nested');
@@ -67,6 +132,7 @@ const TASKS = {
   },
   uniquePreserve: {
     name: 'uniquePreserve',
+    checks: 'Deduplicate an array, keep first occurrence',
     run(fn) {
       expectDeep(fn([1, 2, 2, 3, 1]), [1, 2, 3], 'first wins');
       expectDeep(fn([]), [], 'empty');
@@ -75,6 +141,7 @@ const TASKS = {
   },
   formatBytes: {
     name: 'formatBytes',
+    checks: 'Bytes → `1 KB` / `1.5 KB` style string',
     run(fn) {
       expectEq(fn(0), '0 B', 'zero');
       expectEq(fn(1024), '1 KB', '1024');
@@ -84,6 +151,7 @@ const TASKS = {
   },
   rangeSum: {
     name: 'rangeSum',
+    checks: 'Sum of integers from a to b (either order)',
     run(fn) {
       expectEq(fn(1, 3), 6, '1..3');
       expectEq(fn(3, 1), 6, 'either order');
@@ -93,6 +161,7 @@ const TASKS = {
   },
   titleCase: {
     name: 'titleCase',
+    checks: 'Capitalize each word; collapse extra spaces',
     run(fn) {
       expectEq(fn('hello world'), 'Hello World', 'basic');
       expectEq(fn('HELLO'), 'Hello', 'all caps');
@@ -102,6 +171,7 @@ const TASKS = {
   },
   isAnagram: {
     name: 'isAnagram',
+    checks: 'Same letters ignoring case/spaces/punctuation',
     run(fn) {
       expectEq(fn('listen', 'silent'), true, 'listen/silent');
       expectEq(fn('Hello', 'world'), false, 'hello/world');
@@ -111,6 +181,7 @@ const TASKS = {
   },
   fibonacci: {
     name: 'fibonacci',
+    checks: 'nth Fibonacci number (negative → null)',
     run(fn) {
       expectEq(fn(0), 0, '0');
       expectEq(fn(1), 1, '1');
@@ -120,6 +191,7 @@ const TASKS = {
   },
   groupBy: {
     name: 'groupBy',
+    checks: 'Group objects by a property name',
     run(fn) {
       const rows = [
         { t: 'a', n: 1 },

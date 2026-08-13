@@ -94,3 +94,76 @@ for (const id of Object.keys(TASKS)) {
 }
 if (failed) process.exit(1);
 console.log('score harness: all', Object.keys(TASKS).length, 'tasks passed');
+
+/** Thinking models often open a fence, abort mid-line, then emit a finished function. */
+const DUAL_FENCE = {
+  parseQuery: `Thinking: The user wants a JavaScript function parseQuery(qs) that:
+\`\`\`javascript
+function parseQuery(qs) {
+  if (!qs) return {};
+  if (qs[0] === '?') qs = qs.slice(1);
+  if (!qs) return {};
+  const result = {};
+  for (const part of qs.
+
+\`\`\`javascript
+function parseQuery(qs) {
+  const out = {};
+  if (!qs) return out;
+  const s = qs.charAt(0) === '?' ? qs.slice(1) : qs;
+  if (!s) return out;
+  for (const pair of s.split('&')) {
+    if (!pair) continue;
+    const i = pair.indexOf('=');
+    const k = i === -1 ? pair : pair.slice(0, i);
+    const v = i === -1 ? '' : pair.slice(i + 1);
+    out[decodeURIComponent(k.replace(/\\+/g, ' '))] = decodeURIComponent(v.replace(/\\+/g, ' '));
+  }
+  return out;
+}
+\`\`\``,
+  deepGet: `Thinking: The user wants a JavaScript function deepGet(obj, path) that:
+\`\`\`javascript
+function deepGet(obj, path) {
+  if (path === '' || path == null) return obj;
+  const parts = path.split('.
+
+\`\`\`javascript
+function deepGet(obj, path) {
+  if (path === '') return obj;
+  const parts = String(path).split('.');
+  let cur = obj;
+  for (let i = 0; i < parts.length; i++) {
+    if (cur == null) return undefined;
+    cur = cur[parts[i]];
+  }
+  return cur;
+}
+\`\`\``,
+  titleCase: `Thinking: The user wants a JavaScript function titleCase(str) that:
+\`\`\`javascript
+function titleCase(str) {
+  if (!str) return "";
+  return str
+    .
+
+\`\`\`javascript
+function titleCase(str) {
+  if (!str) return "";
+  return str.trim().replace(/\\s+/g, " ").split(" ").map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(" ");
+}
+\`\`\``,
+};
+
+let dualFailed = 0;
+for (const [id, output] of Object.entries(DUAL_FENCE)) {
+  const r = grade(id, output);
+  if (!r.pass) {
+    dualFailed++;
+    console.error('DUAL-FENCE FAIL', id, r.reason);
+  } else {
+    console.log('ok dual-fence', id);
+  }
+}
+if (dualFailed) process.exit(1);
+console.log('score harness: dual-fence extraction passed');

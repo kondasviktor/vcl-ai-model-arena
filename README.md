@@ -119,9 +119,26 @@ Scored = deterministic assert. Exploratory = side-by-side judgment only — no L
 
 ## Score (1.2, CLI)
 
-**Score** is 12 short, **original** JavaScript functions. The model writes the function; **unit tests** grade it (Aider-lite protocol — not a dump of SWE-bench, Exercism, Terminal-Bench, or lab indexes).
+**Score** is 12 short, **original** JavaScript helpers — not a SWE-bench / lab-index clone.
 
-Cost target: `eval:score:smoke` is cents; a full Score run is meant to stay around **≤ $2 per model** on typical OpenRouter chat prices.
+The model writes **one named function**. Hidden **unit tests** grade it. There is **no LLM judge**. `9/12` is nine helpers that compiled and matched examples, not “75% intelligence.” Failures that say `Unexpected token` mean the extracted snippet never ran (often a truncated thinking fence), not that the algorithm is proven wrong.
+
+| Task | Hidden tests check |
+|---|---|
+| `slugify` | URL slug from a string |
+| `isPalindrome` | Palindrome ignoring case / punctuation |
+| `chunk` | Split an array into groups of size N |
+| `parseQuery` | Query string → object |
+| `deepGet` | Read `a.b.0.c` from nested data |
+| `uniquePreserve` | Deduplicate, keep first occurrence |
+| `formatBytes` | `1024` → `1 KB` |
+| `rangeSum` | Sum of integers from a to b |
+| `titleCase` | Capitalize words, collapse spaces |
+| `isAnagram` | Same letters ignoring junk |
+| `fibonacci` | nth Fibonacci (negative → null) |
+| `groupBy` | Group objects by a key |
+
+Cost target: `eval:score:smoke` is cents; a full Score run is meant to stay around **≤ $2 per model** on typical OpenRouter chat prices. OpenRouter `x-ai/grok-4.6` is the same weights as Cursor Grok 4.6.
 
 ```bash
 # Two tasks, cheap models (same smoke pair as Fun unless you set MODELS=)
@@ -134,7 +151,7 @@ MODELS=google/gemini-3.6-flash,moonshotai/kimi-k3 npm run eval:score
 PROVIDER=hetzner npm run eval:score:smoke
 ```
 
-Harness self-check (no API): `npm run test:score:harness`. Task text: [`tests/score/promptfooconfig.yaml`](./tests/score/promptfooconfig.yaml).
+Harness self-check (no API): `npm run test:score:harness`. How to read a Score log: [`tests/score/README.md`](./tests/score/README.md) and [methodology](./docs/methodology.md#score-12). Task text: [`tests/score/promptfooconfig.yaml`](./tests/score/promptfooconfig.yaml).
 
 ---
 

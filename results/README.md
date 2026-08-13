@@ -17,4 +17,6 @@ Browse a file locally:
 npx promptfoo view results/fun-YYYY-MM-DD.json
 ```
 
+`npm run results:latest` writes the human summary. For **Score**, that file includes a per-task table (what each helper checks, pass/fail, and a plain-language detail). `9/12` is nine unit-tested helpers, not an IQ score — see [tests/score/README.md](../tests/score/README.md).
+
 Do not commit API keys, request headers, or absolute local paths.

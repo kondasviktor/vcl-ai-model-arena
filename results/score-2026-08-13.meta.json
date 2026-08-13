@@ -10,5 +10,5 @@
     "x-ai/grok-4.6"
   ],
   "created_at": "2026-08-13T14:01:52.958Z",
-  "notes": "First Score (1.2) maintainer run. OpenRouter x-ai/grok-4.6 (Cursor Grok 4.6 same weights). 9/12 unit tests passed. Fail: parseQuery, deepGet, titleCase. promptfoo eval-5F6-2026-08-13T14:01:16."
+  "notes": "First Score (1.2) maintainer run. OpenRouter x-ai/grok-4.6 is the same weights as Cursor Grok 4.6. Recorded 9/12. The 3 fails (parseQuery, deepGet, titleCase) are Unexpected token / Invalid or unexpected token: the reply leaked a truncated thinking fence, then a finished function; this eval compiled the draft, so unit tests never ran. Not proof those helpers are wrong. Fun/Dev were not re-run on 4.6. promptfoo eval-5F6-2026-08-13T14:01:16."
 }

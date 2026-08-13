@@ -5,6 +5,7 @@
  */
 const fs = require('fs');
 const path = require('path');
+const { TASKS } = require('../tests/score/harness');
 
 const resultsDir = path.join(__dirname, '..', 'results');
 const outPath = path.join(resultsDir, 'latest.md');
@@ -54,6 +55,66 @@ function rowPassed(row) {
 
 function rowFailed(row) {
   return row.success === false || row.gradingResult?.pass === false;
+}
+
+function rowReason(row) {
+  return (
+    row.gradingResult?.reason ||
+    row.gradingResult?.componentResults?.[0]?.reason ||
+    ''
+  );
+}
+
+function scoreTaskName(row) {
+  return row.testCase?.metadata?.task || row.testCase?.description || 'unknown';
+}
+
+function looksLikeSyntaxFail(reason) {
+  return /unexpected token|invalid or unexpected token|missing \) after argument list|unexpected end of input/i.test(
+    String(reason || '')
+  );
+}
+
+function looksLikeLeakedThinkingFence(output) {
+  const text = String(output || '');
+  const fenceOpens = (text.match(/```(?:javascript|js)?/gi) || []).length;
+  return fenceOpens >= 2 && /thinking\s*:/i.test(text);
+}
+
+function scoreDetail(row) {
+  const reason = rowReason(row);
+  if (rowPassed(row)) return reason || 'all unit tests passed';
+  const output = row.response?.output || '';
+  if (looksLikeSyntaxFail(reason) && looksLikeLeakedThinkingFence(output)) {
+    return (
+      `Could not compile the **extracted** snippet (\`${reason}\`). ` +
+      `The reply opened a code fence in thinking, cut off mid-line, then wrote a finished function in a second fence. ` +
+      `This recorded run compiled the truncated draft — not proof the finished function is wrong.`
+    );
+  }
+  if (looksLikeSyntaxFail(reason)) {
+    return `Could not compile extracted code (\`${reason}\`). The function never ran, so unit tests did not execute.`;
+  }
+  if (reason) return `Unit test failed: ${reason}`;
+  return 'Failed (see JSON)';
+}
+
+function scoreHowToRead() {
+  return [
+    '#### How to read Score',
+    '',
+    'Score is **not** “how smart is this model” and **9/12 is not 75% intelligence.**',
+    '',
+    'Each of the 12 rows is a small original JavaScript helper (slugify, parse a query string, Fibonacci, …). The model must return **one named function** in a markdown fence. There is **no LLM judge**. A sandbox extracts the code and runs a handful of **hidden unit tests**.',
+    '',
+    '- **Pass** — the function compiled and every hidden example matched.',
+    '- **Fail** — we could not extract/compile a function, *or* a unit test mismatched (wrong return value).',
+    '- Syntax errors like `Unexpected token` mean the tests **never ran**. That is often a truncated thinking dump, not “Grok cannot title-case a string.”',
+    '- OpenRouter `x-ai/grok-4.6` is the same weights as **Cursor Grok 4.6**. Fun/Dev tables on this page are still the 2026-07-28 Grok **4.5** matrix.',
+    '',
+    'See [methodology](../docs/methodology.md#score-12) and [tests/score/README.md](../tests/score/README.md).',
+    '',
+  ].join('\n');
 }
 
 function summarize(jsonPath, metaPath) {
@@ -117,6 +178,40 @@ function summarize(jsonPath, metaPath) {
     lines.push('_All tasks in this suite are scored (unit-test pass/fail). No blended “best model” across Fun/Dev/Score. See [methodology](../docs/methodology.md)._');
   }
   lines.push('');
+
+  if ((meta.suite || '') === 'score') {
+    lines.push(scoreHowToRead());
+    const byProvider = {};
+    for (const row of rows) {
+      const name = providerLabel(row);
+      if (!byProvider[name]) byProvider[name] = [];
+      byProvider[name].push(row);
+    }
+    for (const [name, taskRows] of Object.entries(byProvider).sort()) {
+      lines.push(`#### Per task — ${name}`);
+      lines.push('');
+      lines.push('| Task | What it checks | Result | Detail |');
+      lines.push('|---|---|---|---|');
+      for (const row of taskRows) {
+        const task = scoreTaskName(row);
+        const checks = TASKS[task]?.checks || 'JavaScript helper; hidden unit tests';
+        const result = rowPassed(row) ? 'pass' : 'fail';
+        const detail = scoreDetail(row).replace(/\|/g, '\\|');
+        lines.push(`| \`${task}\` | ${checks} | **${result}** | ${detail} |`);
+      }
+      lines.push('');
+      const leaked = taskRows.filter(
+        (row) => !rowPassed(row) && looksLikeSyntaxFail(rowReason(row)) && looksLikeLeakedThinkingFence(row.response?.output || '')
+      );
+      if (leaked.length) {
+        lines.push(
+          `_Those ${leaked.length} syntax fails are from this recorded promptfoo run. Re-grading the same replies with the current extractor (last valid function) passes them — the finished second fence is fine. We do not rewrite the JSON._`
+        );
+        lines.push('');
+      }
+    }
+  }
+
   lines.push(`Files: \`${path.basename(jsonPath)}\` + \`${path.basename(metaPath)}\``);
   lines.push('');
   return lines.join('\n');
