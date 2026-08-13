@@ -17,20 +17,17 @@ If you want a fair multi-model matrix, run the same prompts locally with **BYOK*
 Vendor slides and third-party charts often answer “who looks smartest on a fixed exam.”  
 VCL VibeBench asks a different question: **which model helps you with everyday practical tasks this week?**
 
-Tier 1 (**Vibe Check**) ships two suites:
+Two suites ship today; a third is planned — [docs/ROADMAP.md](./docs/ROADMAP.md):
 
-- **Fun** — short prompts anyone can try (copy-paste below, or CLI)
-- **Dev** — coding / debugging prompts for vibe coders (CLI)
+- **1.0 Fun** — short prompts anyone can try (copy-paste below, or CLI)
+- **1.1 Dev** — coding / debugging prompts for vibe coders (CLI)
+- **1.2 Score** — planned: small Aider-lite coding tests (unit-test pass/fail, cheap to re-run)
 
-Scored prompts have a clear expected answer. Exploratory prompts are for side-by-side judgment — **no blended “best model” score**, no LLM judge in 1.0. Details: [docs/methodology.md](./docs/methodology.md).
-
-Coming next: **Vibe Vision (1.1)** · **Vibe Score (1.2)** — [docs/ROADMAP.md](./docs/ROADMAP.md).
-
-> **Maintainer note:** Vibe Vision generator + `tests/vision` exist in-repo as an **unreleased draft**. Do not announce 1.1 until the VCL demo go-live is approved.
+Scored prompts have a clear expected answer. Exploratory prompts are for side-by-side judgment — **no blended “best model” score**, no LLM judge. Details: [docs/methodology.md](./docs/methodology.md).
 
 ---
 
-## Try Fun in 2 minutes (no terminal)
+## Try Fun (1.0) in 2 minutes (no terminal)
 
 Open ChatGPT, Claude, Gemini, Grok, or any chat model. Copy each prompt, paste it, and compare.  
 For scored items, the expected answer is noted so you can check yourself.
@@ -97,7 +94,7 @@ Which is larger: 9.11 or 9.9? Answer with just the larger number.
 
 ---
 
-## What’s in Dev (CLI only)
+## What’s in Dev (1.1, CLI only)
 
 **Dev** is 10 practical coding / debugging prompts for vibe coders — bug finding, stack traces, refactoring, tests, SQL, multi-step implement, architecture judgment, security, regex, and async races.
 
@@ -225,7 +222,7 @@ MODELS=google/gemini-3.6-flash,moonshotai/kimi-k3 \
 
 - [docs/philosophy.md](./docs/philosophy.md) — why VCL VibeBench exists  
 - [docs/methodology.md](./docs/methodology.md) — scoring and reproducibility  
-- [docs/ROADMAP.md](./docs/ROADMAP.md) — 1.1 Vision · 1.2 Score  
+- [docs/ROADMAP.md](./docs/ROADMAP.md) — 1.0 Fun · 1.1 Dev · 1.2 Score  
 - [CONTRIBUTING.md](./CONTRIBUTING.md) · [SECURITY.md](./SECURITY.md)
 
 ## License

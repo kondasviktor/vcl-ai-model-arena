@@ -2,9 +2,9 @@
 
 | Version | Status | Contents |
 |---|---|---|
-| **1.0** | Shipping | Tier 1 — Vibe Check (Fun + Dev) |
-| **1.1** | Draft (unreleased) | Tier 2 — Vibe Vision motion fixtures + generator in-repo; live demo on VCL stays unpublished until go-live |
-| **1.2** | Planned | Tier 3 — Vibe Score (Aider lite subset, near-zero cost) |
-| Later | Ideas | Tier 4 — Vibe Agent (MCP); community prompt packs; Vision Track C |
+| **1.0 Fun** | Shipping | Short copy-paste + CLI prompts anyone can try |
+| **1.1 Dev** | Shipping | Coding / debugging prompts for vibe coders (CLI) |
+| **1.2 Score** | Planned | Aider-lite coding tests (unit-test pass/fail, near-zero cost) |
+| Later | Ideas | Tier 4 — Vibe Agent (MCP); community prompt packs |
 
-Reserved categories (document only until filled): Fun, Coding/Debugging, Perception, Architecture, Reasoning, Agents, Writing, Business.
+Reserved categories (document only until filled): Fun, Coding/Debugging, Architecture, Reasoning, Agents, Writing, Business.

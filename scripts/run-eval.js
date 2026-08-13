@@ -6,7 +6,7 @@
  * Optional: PROVIDER=hetzner + HETZNER_INFERENCE_API_KEY (Experiments Inference, BYOK).
  *
  * Usage:
- *   MODELS=id1,id2 node scripts/run-eval.js <fun|dev|vision> [-- -o out.json ...]
+ *   MODELS=id1,id2 node scripts/run-eval.js <fun|dev> [-- -o out.json ...]
  *   node scripts/run-eval.js fun --smoke
  *   PROVIDER=hetzner MODELS=Qwen/Qwen3.6-35B-A3B-FP8 npm run eval:fun
  *
@@ -60,10 +60,10 @@ const dashDash = argv.indexOf('--');
 const mainArgs = dashDash >= 0 ? argv.slice(0, dashDash) : argv;
 const extraArgs = dashDash >= 0 ? argv.slice(dashDash + 1) : [];
 
-const suite = mainArgs.find((a) => a === 'fun' || a === 'dev' || a === 'vision');
+const suite = mainArgs.find((a) => a === 'fun' || a === 'dev');
 if (!suite) {
   console.error(
-    'Usage: MODELS=id1,id2 node scripts/run-eval.js <fun|dev|vision> [--smoke] [-- promptfoo-args...]'
+    'Usage: MODELS=id1,id2 node scripts/run-eval.js <fun|dev> [--smoke] [-- promptfoo-args...]'
   );
   console.error('Optional: PROVIDER=hetzner HETZNER_INFERENCE_API_KEY=… (BYOK Experiments Inference)');
   process.exit(1);

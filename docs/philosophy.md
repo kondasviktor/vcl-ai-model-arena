@@ -7,15 +7,16 @@ VCL VibeBench exists because vendor slides and academic leaderboards answer the 
 
 ## Why these prompts
 
-Tier 1 (Vibe Check) mixes:
+Shipping suites mix:
 
-- **Scored** checks with a clear correct answer (counting, logic, bug fix markers)
+- **Scored** checks with a clear expected answer (counting, logic, bug fix markers)
 - **Exploratory** prompts that reveal personality, explanation quality, and judgment — shown side-by-side, not forced into a fake numeric score
 
-No LLM-as-judge in 1.0. Deterministic asserts only where a single answer exists.
+No LLM-as-judge. Deterministic asserts only where a single answer exists. No blended “best model” number across Fun, Dev, and Score.
 
-**Fun** prompts are published for copy-paste in any chat UI *and* for CLI multi-model runs.  
-**Dev** prompts are aimed at vibe coders running the CLI.
+**1.0 Fun** prompts are published for copy-paste in any chat UI *and* for CLI multi-model runs.  
+**1.1 Dev** prompts are aimed at vibe coders running the CLI.  
+**1.2 Score** (planned) is a small Aider-lite coding suite with unit-test pass/fail — not a SWE-bench or lab-index clone.
 
 ## Why BYOK + forkability
 

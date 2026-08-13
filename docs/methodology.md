@@ -1,18 +1,19 @@
-# Methodology — VCL VibeBench 1.0 (Tier 1)
+# Methodology — VCL VibeBench
 
 ## Version
 
-- Product: **VCL VibeBench 1.0.0**
+- Product: **VCL VibeBench** — **1.0 Fun** and **1.1 Dev** shipping; **1.2 Score** planned
 - Engine: promptfoo (pinned in `package.json`)
 - Providers (default): any OpenRouter model ID via `MODELS=` (BYOK with `OPENROUTER_API_KEY`)
 - Providers (optional): Hetzner Experiments Inference via `PROVIDER=hetzner` + `HETZNER_INFERENCE_API_KEY` + allowlisted model IDs (BYOK; experimental)
 
 ## Suites
 
-| Suite | Audience | How to try |
-|---|---|---|
-| Fun | Everyone | Copy-paste in README **and** CLI (`npm run eval:fun`) |
-| Dev | Vibe coders / developers | CLI only (`npm run eval:dev`) |
+| Suite | Version | Audience | How to try |
+|---|---|---|---|
+| Fun | 1.0 | Everyone | Copy-paste in README **and** CLI (`npm run eval:fun`) |
+| Dev | 1.1 | Vibe coders / developers | CLI only (`npm run eval:dev`) |
+| Score | 1.2 (planned) | Developers who want a unit-tested coding number | CLI (`npm run eval:score` when it ships) |
 
 ## Scoring
 
@@ -21,7 +22,7 @@ Each test is tagged `metadata.scoring: scored | exploratory`.
 - **Scored:** deterministic `contains` / `regex` asserts. Exact-answer Fun prompts use `regex` so “answer with just the number” is enforced, not only correctness. These feed accuracy summaries.
 - **Exploratory:** no assert; compare qualitatively in the promptfoo UI (or by eye in a chat app). **No numeric “winner.”**
 
-There is **no LLM judge** in 1.0.
+There is **no LLM judge**. Fun, Dev, and (when it ships) Score stay on deterministic asserts. There is **no blended “best model” score** across suites.
 
 ## Run parameters
 
@@ -65,14 +66,6 @@ There is **no frozen OpenRouter model registry** in the repo — model catalogs 
 
 ## Cadence
 
-Target a Tier 1 run within 48 hours of a notable frontier release; publish no later than 96 hours. Correctness beats speed.
+Target a Fun + Dev run within 48 hours of a notable frontier release; publish no later than 96 hours. Correctness beats speed. Score (1.2) is optional on coding-model drops once it ships.
 
-## Vibe Vision (1.1 — draft / unreleased)
-
-Motion-coherence random-dot fields (light field + dark 1px dots by default; thinner letter mask; optional/auto decoy). Canonical score uses a **PNG frame sequence** (not GIF/MP4). Blind prompt first; hinted prompt is a separate protocol (not merged into one score).
-
-- Generator: `src/vibe-vision/core.js` → `dist/vibe-vision-core.js` (`npm run vision:build`)
-- Export fixtures: `npm run vision:export -- --word OCEAN --out tests/vision/cases/ocean` (default density ~0.25)
-- Eval: `MODELS=… npm run eval:vision`
-- Three-way outcomes to report manually when judging: correct / wrong-confident (often decoy) / cannot tell
-- Live demo on vibecoderslife.com is **draft-only** until an explicit go-live; browser captures WebM then encodes **MP4** for email
+Do **not** wrap third-party mega-benches (SWE-bench, Terminal-Bench, Artificial Analysis indexes, CursorBench, and similar). Cite them in write-ups when useful; do not re-run them here.

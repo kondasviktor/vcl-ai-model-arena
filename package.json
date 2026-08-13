@@ -10,12 +10,9 @@
   "scripts": {
     "eval:fun": "node scripts/run-eval.js fun",
     "eval:dev": "node scripts/run-eval.js dev",
-    "eval:vision": "node scripts/run-eval.js vision",
     "eval:all": "npm run eval:fun && npm run eval:dev",
     "eval:smoke": "node scripts/run-eval.js fun --smoke",
     "eval:hetzner:smoke": "PROVIDER=hetzner MODELS=Qwen/Qwen3.6-35B-A3B-FP8 node scripts/run-eval.js fun --smoke",
-    "vision:build": "node scripts/build-vibe-vision-core.js",
-    "vision:export": "node scripts/vision-export.js",
     "view": "promptfoo view",
     "results:latest": "node scripts/build-latest-results.js",
     "validate:models": "node scripts/validate-openrouter-ids.js"
