@@ -2,7 +2,7 @@
 
 ## Version
 
-- Product: **VCL VibeBench** — **1.0 Fun** and **1.1 Dev** shipping; **1.2 Score** planned
+- Product: **VCL VibeBench** — **1.0 Fun**, **1.1 Dev**, and **1.2 Score** shipping
 - Engine: promptfoo (pinned in `package.json`)
 - Providers (default): any OpenRouter model ID via `MODELS=` (BYOK with `OPENROUTER_API_KEY`)
 - Providers (optional): Hetzner Experiments Inference via `PROVIDER=hetzner` + `HETZNER_INFERENCE_API_KEY` + allowlisted model IDs (BYOK; experimental)
@@ -13,7 +13,7 @@
 |---|---|---|---|
 | Fun | 1.0 | Everyone | Copy-paste in README **and** CLI (`npm run eval:fun`) |
 | Dev | 1.1 | Vibe coders / developers | CLI only (`npm run eval:dev`) |
-| Score | 1.2 (planned) | Developers who want a unit-tested coding number | CLI (`npm run eval:score` when it ships) |
+| Score | 1.2 | Developers who want a unit-tested coding number | CLI (`npm run eval:score`; smoke: `npm run eval:score:smoke`) |
 
 ## Scoring
 
@@ -52,7 +52,7 @@ Set `PROVIDER=hetzner` and `HETZNER_INFERENCE_API_KEY` (your own Experiments tok
 1. Browse https://openrouter.ai/models  
 2. Set `MODELS=id1,id2,...`  
 3. Optional: `MODELS=... npm run validate:models`  
-4. `npm run eval:fun` or `npm run eval:dev`
+4. `npm run eval:fun`, `npm run eval:dev`, or `npm run eval:score`
 
 ### Hetzner (optional)
 
@@ -66,6 +66,15 @@ There is **no frozen OpenRouter model registry** in the repo — model catalogs 
 
 ## Cadence
 
-Target a Fun + Dev run within 48 hours of a notable frontier release; publish no later than 96 hours. Correctness beats speed. Score (1.2) is optional on coding-model drops once it ships.
+Target a Fun + Dev run within 48 hours of a notable frontier release; publish no later than 96 hours. Correctness beats speed. Add **Score** on coding-model drops (`npm run eval:score` or `eval:score:smoke`).
 
 Do **not** wrap third-party mega-benches (SWE-bench, Terminal-Bench, Artificial Analysis indexes, CursorBench, and similar). Cite them in write-ups when useful; do not re-run them here.
+
+## Score (1.2)
+
+Twelve original JavaScript tasks in [`tests/score/`](../tests/score/). The model returns a function in a code fence; [`tests/score/harness.js`](../tests/score/harness.js) runs unit tests in a vm (timeout, no filesystem). Pass/fail only — no LLM judge, not blended with Fun/Dev.
+
+- Smoke: first two tasks (`slugify`, `isPalindrome`)
+- Cost intent: smoke = cents; full suite ≤ about **$2 per model**
+- Same BYOK as Fun/Dev (OpenRouter default, `PROVIDER=hetzner` optional)
+- Protocol is Aider-lite (code + tests). Fixtures are **original VCL** — we do not clone Aider polyglot or Exercism at runtime.

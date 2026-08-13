@@ -1,0 +1,194 @@
+# VCL VibeBench — Score suite (1.2)
+# Original unit-tested coding tasks (Aider-lite protocol). Not SWE-bench / Exercism dump.
+# Run: npm run eval:score   Smoke (2 tasks): npm run eval:score:smoke
+
+description: "VCL VibeBench — Score (1.2)"
+
+prompts:
+  - "{{prompt}}"
+
+providers: []
+
+defaultTest:
+  options:
+    # Room for thinking models; still cheap vs SWE-style benches.
+    max_tokens: 2500
+
+tests:
+  - description: "slugify"
+    metadata:
+      scoring: scored
+      task: slugify
+    vars:
+      task: slugify
+      prompt: |
+        Write a JavaScript function slugify(str) that:
+        - lowercases
+        - replaces any run of spaces or punctuation (anything not a-z, 0-9) with a single hyphen
+        - strips leading/trailing hyphens
+        Return ONLY a markdown javascript code fence with the function. No tests, no explanation.
+    assert:
+      - type: javascript
+        value: file://./harness.js
+
+  - description: "isPalindrome"
+    metadata:
+      scoring: scored
+      task: isPalindrome
+    vars:
+      task: isPalindrome
+      prompt: |
+        Write a JavaScript function isPalindrome(str) that returns true if str is a palindrome
+        ignoring case, spaces, and punctuation (keep only a-z0-9). Empty string is true.
+        Return ONLY a markdown javascript code fence with the function. No tests, no explanation.
+    assert:
+      - type: javascript
+        value: file://./harness.js
+
+  - description: "chunk"
+    metadata:
+      scoring: scored
+      task: chunk
+    vars:
+      task: chunk
+      prompt: |
+        Write a JavaScript function chunk(arr, size) that splits arr into arrays of length size.
+        The last chunk may be shorter. If size < 1, return []. Do not mutate arr.
+        Return ONLY a markdown javascript code fence with the function. No tests, no explanation.
+    assert:
+      - type: javascript
+        value: file://./harness.js
+
+  - description: "parseQuery"
+    metadata:
+      scoring: scored
+      task: parseQuery
+    vars:
+      task: parseQuery
+      prompt: |
+        Write a JavaScript function parseQuery(qs) that parses a URL query string into an object of strings.
+        Ignore a leading '?'. Duplicate keys: last value wins. decodeURIComponent values.
+        Empty input returns {}. Do not use URLSearchParams if you prefer a small parser — either is fine.
+        Return ONLY a markdown javascript code fence with the function. No tests, no explanation.
+    assert:
+      - type: javascript
+        value: file://./harness.js
+
+  - description: "deepGet"
+    metadata:
+      scoring: scored
+      task: deepGet
+    vars:
+      task: deepGet
+      prompt: |
+        Write a JavaScript function deepGet(obj, path) where path is a dot-separated string (e.g. "a.b.0.c").
+        Numeric path segments are array indexes. Missing path returns undefined.
+        Empty path returns obj itself.
+        Return ONLY a markdown javascript code fence with the function. No tests, no explanation.
+    assert:
+      - type: javascript
+        value: file://./harness.js
+
+  - description: "uniquePreserve"
+    metadata:
+      scoring: scored
+      task: uniquePreserve
+    vars:
+      task: uniquePreserve
+      prompt: |
+        Write a JavaScript function uniquePreserve(arr) that returns a new array of unique primitive values,
+        keeping the first occurrence (case-sensitive). Do not mutate arr.
+        Return ONLY a markdown javascript code fence with the function. No tests, no explanation.
+    assert:
+      - type: javascript
+        value: file://./harness.js
+
+  - description: "formatBytes"
+    metadata:
+      scoring: scored
+      task: formatBytes
+    vars:
+      task: formatBytes
+      prompt: |
+        Write a JavaScript function formatBytes(n) for n >= 0:
+        - 0 => "0 B"
+        - 1024 => "1 KB"
+        - 1536 => "1.5 KB"
+        - 1048576 => "1 MB"
+        Use 1024-based units B, KB, MB, GB. If the value is an integer after converting, omit decimals (1 KB not 1.0 KB).
+        Otherwise one decimal place. Space before the unit.
+        Return ONLY a markdown javascript code fence with the function. No tests, no explanation.
+    assert:
+      - type: javascript
+        value: file://./harness.js
+
+  - description: "rangeSum"
+    metadata:
+      scoring: scored
+      task: rangeSum
+    vars:
+      task: rangeSum
+      prompt: |
+        Write a JavaScript function rangeSum(a, b) that returns the sum of all integers from a to b inclusive.
+        a and b may be in either order and may be negative.
+        Return ONLY a markdown javascript code fence with the function. No tests, no explanation.
+    assert:
+      - type: javascript
+        value: file://./harness.js
+
+  - description: "titleCase"
+    metadata:
+      scoring: scored
+      task: titleCase
+    vars:
+      task: titleCase
+      prompt: |
+        Write a JavaScript function titleCase(str) that capitalizes the first letter of each word and lowercases the rest.
+        Collapse any whitespace to a single space and trim. Empty => "".
+        Return ONLY a markdown javascript code fence with the function. No tests, no explanation.
+    assert:
+      - type: javascript
+        value: file://./harness.js
+
+  - description: "isAnagram"
+    metadata:
+      scoring: scored
+      task: isAnagram
+    vars:
+      task: isAnagram
+      prompt: |
+        Write a JavaScript function isAnagram(a, b) that returns true if a and b are anagrams,
+        ignoring case and spaces (keep letters and digits only). Two empty strings are true.
+        Return ONLY a markdown javascript code fence with the function. No tests, no explanation.
+    assert:
+      - type: javascript
+        value: file://./harness.js
+
+  - description: "fibonacci"
+    metadata:
+      scoring: scored
+      task: fibonacci
+    vars:
+      task: fibonacci
+      prompt: |
+        Write a JavaScript function fibonacci(n) for the n-th Fibonacci number (0-indexed: 0, 1, 1, 2, 3, 5, ...).
+        If n is negative, return null. n is an integer.
+        Return ONLY a markdown javascript code fence with the function. No tests, no explanation.
+    assert:
+      - type: javascript
+        value: file://./harness.js
+
+  - description: "groupBy"
+    metadata:
+      scoring: scored
+      task: groupBy
+    vars:
+      task: groupBy
+      prompt: |
+        Write a JavaScript function groupBy(arr, key) that groups an array of objects by obj[key].
+        Return an object whose values are arrays of the original objects, in original order.
+        Empty arr => {}. Do not mutate arr.
+        Return ONLY a markdown javascript code fence with the function. No tests, no explanation.
+    assert:
+      - type: javascript
+        value: file://./harness.js

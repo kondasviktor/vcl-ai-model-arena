@@ -7,8 +7,9 @@ This product includes software and references the following:
   Evaluation CLI used as a dependency. Not forked; used via npm.
 
 - Aider / polyglot-benchmark (Apache-2.0 / Exercism licenses)
-  Planned for 1.2 Score only. Cloned at run-time when that suite ships;
-  not vendored in this repository for Fun (1.0) or Dev (1.1).
+  Referenced as the *protocol* for 1.2 Score (write code, unit tests grade).
+  Score fixtures in this repository are original VCL tasks — not a vendored
+  or runtime clone of Aider polyglot or Exercism problem statements.
 
 Optional BYOK path — Hetzner Experiments Inference (OpenAI-compatible API):
   https://experiments.hetzner.com/docs/inference

@@ -17,11 +17,11 @@ If you want a fair multi-model matrix, run the same prompts locally with **BYOK*
 Vendor slides and third-party charts often answer “who looks smartest on a fixed exam.”  
 VCL VibeBench asks a different question: **which model helps you with everyday practical tasks this week?**
 
-Two suites ship today; a third is planned — [docs/ROADMAP.md](./docs/ROADMAP.md):
+Two suites ship today; a third is the coding lane — [docs/ROADMAP.md](./docs/ROADMAP.md):
 
 - **1.0 Fun** — short prompts anyone can try (copy-paste below, or CLI)
 - **1.1 Dev** — coding / debugging prompts for vibe coders (CLI)
-- **1.2 Score** — planned: small Aider-lite coding tests (unit-test pass/fail, cheap to re-run)
+- **1.2 Score** — 12 original unit-tested JavaScript tasks (CLI; write a function, tests pass/fail)
 
 Scored prompts have a clear expected answer. Exploratory prompts are for side-by-side judgment — **no blended “best model” score**, no LLM judge. Details: [docs/methodology.md](./docs/methodology.md).
 
@@ -117,6 +117,27 @@ Scored = deterministic assert. Exploratory = side-by-side judgment only — no L
 
 ---
 
+## Score (1.2, CLI)
+
+**Score** is 12 short, **original** JavaScript functions. The model writes the function; **unit tests** grade it (Aider-lite protocol — not a dump of SWE-bench, Exercism, Terminal-Bench, or lab indexes).
+
+Cost target: `eval:score:smoke` is cents; a full Score run is meant to stay around **≤ $2 per model** on typical OpenRouter chat prices.
+
+```bash
+# Two tasks, cheap models (same smoke pair as Fun unless you set MODELS=)
+npm run eval:score:smoke
+
+# Full 12 tasks
+MODELS=google/gemini-3.6-flash,moonshotai/kimi-k3 npm run eval:score
+
+# Hetzner BYOK
+PROVIDER=hetzner npm run eval:score:smoke
+```
+
+Harness self-check (no API): `npm run test:score:harness`. Task text: [`tests/score/promptfooconfig.yaml`](./tests/score/promptfooconfig.yaml).
+
+---
+
 ## How you can help (please)
 
 1. ⭐ **Star this repo** if VCL VibeBench is useful — stars help others find an honest, re-runnable comparison when a new model drops, and they tell us the project is worth maintaining.
@@ -152,6 +173,10 @@ MODELS=anthropic/claude-opus-5,openai/gpt-5.6-sol,google/gemini-3.6-flash npm ru
 
 # Cheap sanity check (2 inexpensive OpenRouter models, Fun only)
 npm run eval:smoke
+
+# Score — 12 unit-tested JS tasks (smoke = 2 tasks)
+npm run eval:score:smoke
+MODELS=google/gemini-3.6-flash npm run eval:score
 
 # Optional: confirm IDs exist on OpenRouter
 MODELS=anthropic/claude-opus-5,openai/gpt-5.6-sol npm run validate:models

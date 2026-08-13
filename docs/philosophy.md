@@ -16,7 +16,7 @@ No LLM-as-judge. Deterministic asserts only where a single answer exists. No ble
 
 **1.0 Fun** prompts are published for copy-paste in any chat UI *and* for CLI multi-model runs.  
 **1.1 Dev** prompts are aimed at vibe coders running the CLI.  
-**1.2 Score** (planned) is a small Aider-lite coding suite with unit-test pass/fail — not a SWE-bench or lab-index clone.
+**1.2 Score** is a small original coding suite with unit-test pass/fail (Aider-lite protocol) — not a SWE-bench or lab-index clone.
 
 ## Why BYOK + forkability
 

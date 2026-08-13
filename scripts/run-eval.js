@@ -6,7 +6,7 @@
  * Optional: PROVIDER=hetzner + HETZNER_INFERENCE_API_KEY (Experiments Inference, BYOK).
  *
  * Usage:
- *   MODELS=id1,id2 node scripts/run-eval.js <fun|dev> [-- -o out.json ...]
+ *   MODELS=id1,id2 node scripts/run-eval.js <fun|dev|score> [-- -o out.json ...]
  *   node scripts/run-eval.js fun --smoke
  *   PROVIDER=hetzner MODELS=Qwen/Qwen3.6-35B-A3B-FP8 npm run eval:fun
  *
@@ -60,10 +60,10 @@ const dashDash = argv.indexOf('--');
 const mainArgs = dashDash >= 0 ? argv.slice(0, dashDash) : argv;
 const extraArgs = dashDash >= 0 ? argv.slice(dashDash + 1) : [];
 
-const suite = mainArgs.find((a) => a === 'fun' || a === 'dev');
+const suite = mainArgs.find((a) => a === 'fun' || a === 'dev' || a === 'score');
 if (!suite) {
   console.error(
-    'Usage: MODELS=id1,id2 node scripts/run-eval.js <fun|dev> [--smoke] [-- promptfoo-args...]'
+    'Usage: MODELS=id1,id2 node scripts/run-eval.js <fun|dev|score> [--smoke] [-- promptfoo-args...]'
   );
   console.error('Optional: PROVIDER=hetzner HETZNER_INFERENCE_API_KEY=… (BYOK Experiments Inference)');
   process.exit(1);
@@ -176,6 +176,16 @@ if (provider === 'hetzner') {
     id: 'openrouter:' + id,
     label: id,
   }));
+}
+
+if (suite === 'score') {
+  for (const p of config.providers) {
+    p.config = Object.assign({}, p.config || {}, { max_tokens: 2500, temperature: 0 });
+  }
+  if (smoke && Array.isArray(config.tests)) {
+    config.tests = config.tests.slice(0, 2);
+    console.error('run-eval: score smoke — 2 of 12 tasks');
+  }
 }
 
 fs.writeFileSync(generatedPath, yaml.dump(config, { lineWidth: 120 }) + '\n');
