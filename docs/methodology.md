@@ -43,7 +43,7 @@ Regenerate the human summary with `npm run results:latest`.
 
 ## Optional provider: Hetzner Experiments Inference
 
-Set `PROVIDER=hetzner` and `HETZNER_INFERENCE_API_KEY` (your own Experiments token). Scored/exploratory asserts are unchanged. The generated promptfoo config uses OpenAI-compatible `apiBaseUrl` and `maxConcurrency: 1` (Hetzner request limits). Label published result writeups with the provider (e.g. `hetzner:…` model labels). Free only while Hetzner marks the API experimental — not a permanent €0 guarantee. GitHub Actions CI remains OpenRouter-only.
+Set `PROVIDER=hetzner` and `HETZNER_INFERENCE_API_KEY` (your own Experiments token). Scored/exploratory asserts are unchanged. The generated promptfoo config uses OpenAI-compatible `apiBaseUrl` and `maxConcurrency: 1` (Hetzner request limits). Label published result writeups with the provider (e.g. `hetzner:…` model labels). Free only while Hetzner marks the API experimental — not a permanent €0 guarantee. Catalog and capacity can change without notice (high demand). GitHub Actions CI remains OpenRouter-only.
 
 ## Picking models
 
@@ -58,7 +58,7 @@ Set `PROVIDER=hetzner` and `HETZNER_INFERENCE_API_KEY` (your own Experiments tok
 
 1. Create a token at https://experiments.hetzner.com → Inference  
 2. Set `HETZNER_INFERENCE_API_KEY` and `PROVIDER=hetzner`  
-3. Use allowlisted IDs (see README) or omit `MODELS` to run all four  
+3. Use allowlisted IDs (see README) or omit `MODELS` to run the current public set (Qwen 3.6 as of Aug 2026)  
 4. `PROVIDER=hetzner npm run validate:models`  
 5. `PROVIDER=hetzner npm run eval:fun`
 

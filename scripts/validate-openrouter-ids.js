@@ -3,7 +3,7 @@
  * Soft-check model IDs from MODELS= (or argv) against the active provider's catalog.
  *
  *   MODELS=id1,id2 npm run validate:models
- *   PROVIDER=hetzner MODELS=Kimi-K2.7-Code npm run validate:models
+ *   PROVIDER=hetzner MODELS=Qwen/Qwen3.6-35B-A3B-FP8 npm run validate:models
  *
  * Default PROVIDER=openrouter (public list, no key required).
  * PROVIDER=hetzner requires HETZNER_INFERENCE_API_KEY (BYOK).

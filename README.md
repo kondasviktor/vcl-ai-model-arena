@@ -203,31 +203,32 @@ npx promptfoo view            # local results UI
 
 ### Optional: Hetzner Experiments Inference (BYOK)
 
-OpenRouter stays the default. You can also run the same Fun/Dev prompts against **Hetzner’s experimental OpenAI-compatible Inference API** with **your own** Experiments token (not a Hetzner Cloud console token).
+OpenRouter stays the default. You can also run the same Fun/Dev/Score prompts against **Hetzner’s experimental OpenAI-compatible Inference API** with **your own** Experiments token (not a Hetzner Cloud console token).
+
+Experiments is a **test system**. High demand can make availability and performance fluctuate. Hetzner may change the public catalog without notice. More background: [Hetzner Blog](https://www.hetzner.com/blog/).
 
 1. Sign in at [experiments.hetzner.com](https://experiments.hetzner.com) → **Apps → Inference → Create API Token**  
 2. Put the token in `.env` as `HETZNER_INFERENCE_API_KEY`  
 3. Set `PROVIDER=hetzner`
 
-Allowlisted model IDs (must match Hetzner docs):
+Allowlisted model IDs (must match current Hetzner docs — re-check before a run):
 
-| Label | Model ID |
-|---|---|
-| Kimi K2.7 Code | `Kimi-K2.7-Code` |
-| DeepSeek V4 Flash | `DeepSeek-V4-Flash-0731` |
-| GLM 5.2 | `GLM-5.2-NVFP4` |
-| Qwen 3.6 35B-A3B | `Qwen/Qwen3.6-35B-A3B-FP8` |
+| Label | Model ID | Status |
+|---|---|---|
+| Qwen 3.6 35B-A3B | `Qwen/Qwen3.6-35B-A3B-FP8` | Public on Experiments |
+| Qwen 3.8 27B | *(ID TBD)* | Hetzner said it will be added shortly — not in the allowlist until the exact ID is in their docs |
+| Kimi K2.7 Code | `Kimi-K2.7-Code` | **Withdrawn** from public Experiments |
+| DeepSeek V4 Flash | `DeepSeek-V4-Flash-0731` | **Withdrawn** from public Experiments |
+| GLM 5.2 | `GLM-5.2-NVFP4` | **Withdrawn** from public Experiments |
 
 ```bash
-# All four (default when MODELS unset under PROVIDER=hetzner)
+# Default when MODELS unset under PROVIDER=hetzner (Qwen 3.6)
 PROVIDER=hetzner npm run eval:fun
 
-# Or pick models explicitly
-PROVIDER=hetzner \
-MODELS=Kimi-K2.7-Code,DeepSeek-V4-Flash-0731,GLM-5.2-NVFP4,Qwen/Qwen3.6-35B-A3B-FP8 \
-npm run eval:fun
+# Explicit (same ID today)
+PROVIDER=hetzner MODELS=Qwen/Qwen3.6-35B-A3B-FP8 npm run eval:fun
 
-# Cheap Hetzner sanity check (Qwen only, Fun)
+# Cheap Hetzner sanity check (Qwen 3.6, Fun)
 npm run eval:hetzner:smoke
 
 PROVIDER=hetzner npm run validate:models
