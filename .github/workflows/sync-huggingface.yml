@@ -32,8 +32,7 @@ jobs:
           npm run results:latest
           npm run hf:export
 
-      - uses: huggingface/hub-sync@v0.1.0
-        if: ${{ secrets.HF_TOKEN != '' }}
+      - uses: huggingface/hub-sync@v0.2.0
         with:
           github_repo_id: ${{ github.repository }}
           huggingface_repo_id: kondasviktor/vcl-vibebench
@@ -42,8 +41,7 @@ jobs:
           space_sdk: static
           subdirectory: hf-space
 
-      - uses: huggingface/hub-sync@v0.1.0
-        if: ${{ secrets.HF_TOKEN != '' }}
+      - uses: huggingface/hub-sync@v0.2.0
         with:
           github_repo_id: ${{ github.repository }}
           huggingface_repo_id: kondasviktor/vcl-vibebench
