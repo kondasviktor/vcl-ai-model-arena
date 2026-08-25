@@ -24,4 +24,5 @@ cp .env.example .env   # set OPENROUTER_API_KEY
 npm ci
 MODELS=google/gemini-3.6-flash,moonshotai/kimi-k3 npm run eval:fun
 # or: npm run eval:smoke
+npm run hf:export   # refresh Hugging Face JSONL + Space data from YAML / results
 ```

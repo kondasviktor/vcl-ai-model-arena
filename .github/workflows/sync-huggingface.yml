@@ -1,0 +1,52 @@
+name: Sync VibeBench to Hugging Face
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "hf-space/**"
+      - "hf-dataset/**"
+      - "hf-profile/**"
+      - "results/**"
+      - "tests/**/promptfooconfig.yaml"
+      - "scripts/build-hf-dataset.js"
+      - "scripts/build-latest-results.js"
+      - ".github/workflows/sync-huggingface.yml"
+  workflow_dispatch:
+
+jobs:
+  export-and-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Export Space data and dataset JSONL
+        run: |
+          npm run results:latest
+          npm run hf:export
+
+      - uses: huggingface/hub-sync@v0.1.0
+        if: ${{ secrets.HF_TOKEN != '' }}
+        with:
+          github_repo_id: ${{ github.repository }}
+          huggingface_repo_id: kondasviktor/vcl-vibebench
+          hf_token: ${{ secrets.HF_TOKEN }}
+          repo_type: space
+          space_sdk: static
+          subdirectory: hf-space
+
+      - uses: huggingface/hub-sync@v0.1.0
+        if: ${{ secrets.HF_TOKEN != '' }}
+        with:
+          github_repo_id: ${{ github.repository }}
+          huggingface_repo_id: kondasviktor/vcl-vibebench
+          hf_token: ${{ secrets.HF_TOKEN }}
+          repo_type: dataset
+          subdirectory: hf-dataset

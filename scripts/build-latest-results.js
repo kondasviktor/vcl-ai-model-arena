@@ -217,6 +217,89 @@ function summarize(jsonPath, metaPath) {
   return lines.join('\n');
 }
 
+function aggregateProviders(rows) {
+  const scored = {};
+  const exploratory = {};
+  for (const row of rows) {
+    const name = providerLabel(row);
+    if (isScoredRow(row)) {
+      if (!scored[name]) scored[name] = { pass: 0, fail: 0, total: 0 };
+      scored[name].total += 1;
+      if (rowPassed(row)) scored[name].pass += 1;
+      else if (rowFailed(row)) scored[name].fail += 1;
+    } else {
+      if (!exploratory[name]) exploratory[name] = { total: 0 };
+      exploratory[name].total += 1;
+    }
+  }
+  return { scored, exploratory };
+}
+
+function suitePayload(jsonPath, metaPath) {
+  const raw = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+  const meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'));
+  const rows = extractResultRows(raw) || [];
+  const { scored, exploratory } = aggregateProviders(rows);
+  const payload = {
+    suite: meta.suite || path.basename(jsonPath).split('-')[0],
+    date: meta.date || null,
+    vibebench_version: meta.vibebench_version || null,
+    promptfoo_version: meta.promptfoo_version || null,
+    runner: meta.runner || null,
+    label: meta.label || 'maintainer',
+    models: meta.models || [],
+    git_sha: meta.git_sha || null,
+    notes: meta.notes || '',
+    files: {
+      json: path.basename(jsonPath),
+      meta: path.basename(metaPath),
+    },
+    scored: Object.entries(scored)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([model, s]) => ({ model, pass: s.pass, fail: s.fail, scored_total: s.total })),
+    exploratory: Object.entries(exploratory)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([model, s]) => ({ model, exploratory_total: s.total })),
+  };
+  if ((meta.suite || '') === 'score') {
+    payload.tasks = rows.map((row) => ({
+      model: providerLabel(row),
+      task: scoreTaskName(row),
+      result: rowPassed(row) ? 'pass' : 'fail',
+      detail: scoreDetail(row),
+    }));
+  }
+  return payload;
+}
+
+function latestBySuite(pairs) {
+  const map = {};
+  for (const p of pairs) {
+    const suite = p.base.split('-')[0];
+    const existing = map[suite];
+    if (!existing || p.base.localeCompare(existing.base) > 0) {
+      map[suite] = p;
+    }
+  }
+  return map;
+}
+
+function writeLatestJson(map, generated) {
+  const jsonOut = path.join(resultsDir, 'latest.json');
+  const payload = { generated, suites: {} };
+  for (const suite of Object.keys(map).sort()) {
+    payload.suites[suite] = suitePayload(map[suite].json, map[suite].meta);
+  }
+  fs.writeFileSync(jsonOut, `${JSON.stringify(payload, null, 2)}\n`);
+  console.log('Updated', jsonOut);
+
+  const spaceData = path.join(__dirname, '..', 'hf-space', 'data');
+  if (fs.existsSync(path.dirname(spaceData))) {
+    fs.mkdirSync(spaceData, { recursive: true });
+    fs.writeFileSync(path.join(spaceData, 'latest.json'), `${JSON.stringify(payload, null, 2)}\n`);
+  }
+}
+
 function main() {
   const pairs = listPairs();
   if (!pairs.length) {
@@ -231,26 +314,35 @@ function main() {
     return;
   }
 
-  const latestBySuite = {};
-  for (const p of pairs) {
-    const suite = p.base.split('-')[0];
-    const existing = latestBySuite[suite];
-    if (!existing || p.base.localeCompare(existing.base) > 0) {
-      latestBySuite[suite] = p;
-    }
-  }
+  const map = latestBySuite(pairs);
+  const generated = new Date().toISOString().slice(0, 10);
 
   const parts = [
     '# Latest VCL VibeBench results',
     '',
-    `_Generated ${new Date().toISOString().slice(0, 10)}_`,
+    `_Generated ${generated}_`,
     '',
   ];
-  for (const suite of Object.keys(latestBySuite).sort()) {
-    parts.push(summarize(latestBySuite[suite].json, latestBySuite[suite].meta));
+  for (const suite of Object.keys(map).sort()) {
+    parts.push(summarize(map[suite].json, map[suite].meta));
   }
   fs.writeFileSync(outPath, parts.join('\n'));
   console.log('Updated', outPath);
+  writeLatestJson(map, generated);
 }
 
-main();
+module.exports = {
+  listPairs,
+  extractResultRows,
+  isScoredRow,
+  providerLabel,
+  rowPassed,
+  rowFailed,
+  aggregateProviders,
+  suitePayload,
+  latestBySuite,
+};
+
+if (require.main === module) {
+  main();
+}

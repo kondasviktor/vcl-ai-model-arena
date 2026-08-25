@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VCL VibeBench — Practical AI Model Arena</title>
+  <meta name="description" content="Inspect Fun, Dev, and Score prompts and the latest maintainer results. Fork the GitHub CLI to re-run with your own key.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <p class="kicker">Vibe Coder's Life</p>
+    <h1>VCL VibeBench</h1>
+    <p class="slogan">Stop trusting benchmark slides. Run it yourself.</p>
+    <p class="lead">Practical, reproducible AI model comparisons. No blended intelligence score. No LLM judge. This Space is a browser explorer — official scoring is clone-and-run on GitHub with your own key.</p>
+    <div class="actions">
+      <a class="btn" href="#fun">Try Fun</a>
+      <a class="btn" href="#results">Explore results</a>
+      <a class="btn" href="https://github.com/kondasviktor/vcl-ai-model-arena">View on GitHub</a>
+      <a class="btn" href="https://vibecoderslife.com/vibebench?utm_source=huggingface&amp;utm_medium=space&amp;utm_campaign=vibebench&amp;utm_content=header">Read VCL analysis</a>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="VibeBench sections">
+    <button type="button" role="tab" aria-selected="true" data-tab="overview">Overview</button>
+    <button type="button" role="tab" aria-selected="false" data-tab="fun">Fun</button>
+    <button type="button" role="tab" aria-selected="false" data-tab="dev">Dev</button>
+    <button type="button" role="tab" aria-selected="false" data-tab="score">Score</button>
+    <button type="button" role="tab" aria-selected="false" data-tab="results">Results</button>
+    <button type="button" role="tab" aria-selected="false" data-tab="methodology">Methodology</button>
+    <button type="button" role="tab" aria-selected="false" data-tab="about">About</button>
+  </nav>
+
+  <section id="overview" class="panel active" role="tabpanel">
+    <div class="cards">
+      <article class="card">
+        <h3>Fun 1.0</h3>
+        <p>10 quick tests. Reasoning, creativity, and simple traps. Best for a vibe check in any chat UI.</p>
+      </article>
+      <article class="card">
+        <h3>Dev 1.1</h3>
+        <p>10 practical coding and debugging prompts. Mix of deterministic and exploratory. Best for vibe coders.</p>
+      </article>
+      <article class="card">
+        <h3>Score 1.2</h3>
+        <p>12 original JavaScript tasks. Hidden unit tests on GitHub. Best for a unit-test pass count — not an IQ score.</p>
+      </article>
+    </div>
+    <p class="note">Want the interpretation, not just the numbers? Vibe Coder's Life publishes practical model comparisons and reruns after notable releases.</p>
+  </section>
+
+  <section id="fun" class="panel" role="tabpanel"></section>
+  <section id="dev" class="panel" role="tabpanel"></section>
+  <section id="score" class="panel" role="tabpanel"></section>
+  <section id="results" class="panel" role="tabpanel"></section>
+
+  <section id="methodology" class="panel" role="tabpanel">
+    <h2>Methodology</h2>
+    <p class="note">Scored items use deterministic asserts (or hidden unit tests on Score). Exploratory items are side-by-side judgment only. There is no blended “best model” score across Fun, Dev, and Score.</p>
+    <p class="note">The GitHub README omits some Dev paste so a casual chat session does not quietly contaminate a CLI matrix. Prompts are still public in the repo and in this explorer. Official fair runs: fork the repo, set your key, run <code>npm run eval:fun</code> / <code>eval:dev</code> / <code>eval:score</code>.</p>
+    <p class="note">Score hidden tests are not published here. Clone GitHub to grade generated functions.</p>
+  </section>
+
+  <section id="about" class="panel" role="tabpanel">
+    <h2>About</h2>
+    <p class="note">VCL VibeBench is built by Viktor at Vibe Coder's Life (Budapest). GitHub is the canonical source. Hugging Face is the discovery layer. The newsletter owns the audience relationship.</p>
+    <p class="note">Dataset: <a href="https://huggingface.co/datasets/kondasviktor/vcl-vibebench">kondasviktor/vcl-vibebench</a> (Fun, Dev, Score, results).</p>
+  </section>
+
+  <aside class="cta">
+    <h2>Want the interpretation, not just the numbers?</h2>
+    <p class="note">Get notified when VCL VibeBench is re-run after important model releases.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="https://vibecoderslife.com/vibebench?utm_source=huggingface&amp;utm_medium=space&amp;utm_campaign=vibebench&amp;utm_content=subscribe#subscribe-email">Get rerun alerts</a>
+      <a class="btn" href="https://vibecoderslife.com/vibebench?utm_source=huggingface&amp;utm_medium=space&amp;utm_campaign=vibebench&amp;utm_content=results">Read VCL analysis</a>
+      <a class="btn" href="https://github.com/kondasviktor/vcl-ai-model-arena">Star on GitHub</a>
+    </div>
+  </aside>
+
+  <footer>
+    MIT code · CC BY 4.0 prompts · No Hugging Face inference · BYOK on GitHub only
+  </footer>
+  <script src="app.js"></script>
+</body>
+</html>

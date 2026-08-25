@@ -10,6 +10,31 @@ If you want a fair multi-model matrix, run the same prompts locally with **BYOK*
 > Display name: **VCL VibeBench** · GitHub: `kondasviktor/vcl-ai-model-arena`  
 > Built for developers, makers, indie hackers, and AI enthusiasts — not academic leaderboard theater.
 
+## Try VCL VibeBench in your browser
+
+Prefer not to clone the repo first?
+
+**[Open the interactive explorer on Hugging Face](https://huggingface.co/spaces/kondasviktor/vcl-vibebench)** — Fun / Dev / Score prompts, latest maintainer results, no API key required.
+
+Dataset (Fun, Dev, Score, results): [kondasviktor/vcl-vibebench](https://huggingface.co/datasets/kondasviktor/vcl-vibebench)  
+Write-ups + newsletter: [vibecoderslife.com/vibebench](https://vibecoderslife.com/vibebench?utm_source=github&utm_medium=readme&utm_campaign=vibebench)
+
+Hugging Face auto-sync: repo secret `HF_TOKEN` (fine-grained write token) lets `.github/workflows/sync-huggingface.yml` publish the Static Space and dataset on push to `main`.
+
+First-time Hub create (after `hf auth login` with a write token, Static SDK only — no Gradio/Docker/PRO):
+
+```bash
+npm run results:latest && npm run hf:export
+hf repos create kondasviktor/vcl-vibebench --type space --space-sdk static --public --exist-ok
+hf upload kondasviktor/vcl-vibebench hf-space --type space
+hf repos create kondasviktor/vcl-vibebench --type dataset --public --exist-ok
+hf upload kondasviktor/vcl-vibebench hf-dataset --type dataset
+hf repos create kondasviktor/kondasviktor --type model --public --exist-ok
+hf upload kondasviktor/kondasviktor hf-profile/README.md --type model
+```
+
+Then in the Hub UI: **New Collection → VCL VibeBench**, add the Space and Dataset.
+
 ---
 
 ## Why this exists

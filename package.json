@@ -18,6 +18,7 @@
     "test:score:harness": "node scripts/test-score-harness.js",
     "view": "promptfoo view",
     "results:latest": "node scripts/build-latest-results.js",
+    "hf:export": "node scripts/build-hf-dataset.js",
     "validate:models": "node scripts/validate-openrouter-ids.js"
   },
   "devDependencies": {
