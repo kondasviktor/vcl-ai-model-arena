@@ -5,7 +5,7 @@
   "description": "VCL VibeBench — open AI model benchmark by Vibe Coder's Life",
   "license": "MIT",
   "engines": {
-    "node": ">=20"
+    "node": ">=24"
   },
   "scripts": {
     "eval:fun": "node scripts/run-eval.js fun",
@@ -22,7 +22,11 @@
     "validate:models": "node scripts/validate-openrouter-ids.js"
   },
   "devDependencies": {
-    "promptfoo": "0.121.19",
-    "js-yaml": "4.1.0"
+    "js-yaml": "5.5.0",
+    "promptfoo": "0.125.1"
+  },
+  "overrides": {
+    "basic-ftp": "^6.2.3",
+    "@azure/msal-node": "^7.1.1"
   }
 }
